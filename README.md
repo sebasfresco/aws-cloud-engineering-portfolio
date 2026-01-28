@@ -66,7 +66,7 @@ I’m building this using a three-pillar approach:
 ## About Me
 
 **Sebastiao Fresco**  
-Systems / NOC Engineer | AWS | Security-minded | TS/SCI
+Systems / NOC Engineer | AWS | Security-minded
 
 **Certifications**
 - AWS Certified Solutions Architect – Associate  
