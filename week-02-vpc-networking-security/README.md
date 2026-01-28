@@ -1,27 +1,34 @@
 # Week 2 - VPC Networking + Security
 
-This week was about building a production-style VPC from scratch and understanding what actually controls traffic in AWS.
+Week 2 was all about AWS networking and security boundaries.
 
-I built the full layout (public/private subnets, IGW, NAT, route tables), layered SGs + NACLs, and broke parts of it on purpose to see what fails and why.
+Not “launch a VPC and move on.”
+I wanted to understand the design choices behind a production-style network, what each component is responsible for, and what actually breaks when something is missing.
 
 ## Quick demo (video)
 LinkedIn article + video:  
-[I Built a Production-Grade VPC From Scratch — Here’s What I Learned](https://www.linkedin.com/pulse/i-built-production-grade-vpc-from-scratch-heres-what-learned-fresco-gmome/)
+https://www.linkedin.com/pulse/i-built-production-grade-vpc-from-scratch-heres-what-learned-fresco-gmome/
 
 ## Output
-- Decision doc: [`vpc-architecture.md`](./vpc-architecture.md)
-- Diagram: [`vpc-architecture-diagram.png`](./vpc-architecture-diagram.png)
-- Question drills: [`question-drills.pdf`](./notes/question-drills.pdf)
+- Decision doc: [`docs/vpc-architecture.md`](./docs/vpc-architecture.md)
+- Architecture diagram: [`infra/vpc-architecture-diagram.png`](./infra/vpc-architecture-diagram.png)
+- Question drills (handwritten): [`notes/question-drills.pdf`](./notes/question-drills.pdf)
 
 ## What I built
-- VPC with public + private subnets
-- Internet Gateway (public routing)
-- NAT Gateway (private outbound)
-- Separate route tables (public vs private)
-- Security Groups + NACLs (layered)
+- VPC with a public subnet and a private subnet
+- Internet Gateway for public subnet routing
+- NAT Gateway for private subnet outbound access
+- Separate route tables for public vs private tiers
+- Security Groups and NACLs layered together
 
-## Key decisions
-- Public/private split for clean boundaries and reduced blast radius
-- NAT Gateway for outbound access without exposing private resources
-- Route tables treated as the “source of truth” for traffic flow
-- SGs for instance-level control, NACLs for subnet guardrails
+## What I focused on
+- Subnet separation and blast radius control
+- Routing as the real “source of truth”
+- SG vs NACL differences in real behavior, not definitions
+- NAT Gateway cost and why it exists
+
+## Notes I kept for myself
+The question drills are short but they helped a lot:
+- why AWS separates Security Groups and NACLs
+- why you cannot delete a VPC with resources inside it
+- why NAT Gateway cost shows up fast in real builds
