@@ -7,10 +7,10 @@ Before building bigger architectures, I wanted to be able to explain the AWS ser
 ## Output
 - [`aws-services-audit.md`](./aws-services-audit.md)
 
-## Notes (handwritten)
-- Core problem (Day 0): `notes/core-problem.pdf`
-- Well-Architected takeaways (Days 3–4): `notes/well-architected-framework.pdf`
-- Business value mapping: `notes/business-value-mapping.pdf`
+## Handwritten notes
+- Core problem: [`core-problem.pdf`](./notes/core-problem.pdf)
+- Well-Architected takeaways: [`well-architected-framework.pdf`](./notes/well-architected-framework.pdf)
+- Business value mapping: [`business-value-mapping.pdf`](./notes/business-value-mapping.pdf)
 
 ## What I cared about this week
 - Choosing services based on constraints, not habits
