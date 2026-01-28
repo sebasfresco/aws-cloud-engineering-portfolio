@@ -1,34 +1,24 @@
 # Week 1 - First Principles Foundation
 
-## Objective
-Reset my thinking from “sysadmin who knows tools” to “cloud engineer who understands why things exist.”
-This week is about fundamentals, trade-offs, and getting honest about what I’ve actually used in production.
+This week was about building a base. Not memorizing AWS services, but being able to explain what they actually do, when they make sense, and when they’re a waste.
 
-## Deliverable
-- AWS Services Audit (First Principles Notes):  
-  [`aws-services-audit.md`](./aws-services-audit.md)
+## What I did
+I wrote down every AWS service I’ve used in production and forced myself to answer a simple question:
 
-## What I focused on
-I wrote down every AWS service I’ve used in real environments and explained it in plain English first, then used the correct technical terms where it matters.
+**What problem does this solve, and what’s the trade-off?**
 
-The point wasn’t to list services. The point was to be able to answer questions like:
-- What problem does this service solve?
-- What’s the trade-off?
-- When is it the wrong tool?
+## Main deliverable
+- [`aws-services-audit.md`](./aws-services-audit.md)
 
-## 3 Takeaways (in plain English)
-1) **Most AWS services exist to save you time, not to be fancy.**  
-   “Managed” usually means you pay more money so you don’t have to babysit it.
+## What this sets up
+This is the foundation for everything in the rest of the 12-week blueprint:
+- choosing compute without guessing (EC2 vs Lambda vs containers)
+- choosing storage based on access patterns (S3 vs EBS vs EFS)
+- understanding managed services as a time vs money trade
+- being intentional about security boundaries (IAM + VPC)
+- keeping cost in mind early instead of “figuring it out later”
 
-2) **S3 is the default for a reason.**  
-   It’s cheap, durable, works with everything, and most tools assume you have it.
-
-3) **The real skill is choosing the right tool, not knowing 100 tools.**  
-   The difference between junior and mid-level is being able to explain why you picked something and what you gave up.
-
-## Notes
-This is the foundation for the rest of the 12-week blueprint because every project later on depends on these basics:
-- compute choices (EC2 vs Lambda vs containers)
-- storage choices (S3 vs EBS vs EFS)
-- security boundaries (IAM + VPC)
-- cost awareness (what runs 24/7 vs what’s event-driven)
+## Takeaways
+- Most services are simple when you strip away the branding. The confusion comes from options, not complexity.
+- “Managed” usually means you’re paying AWS to handle the annoying parts.
+- The real skill is being able to explain why you chose something, not just that you used it.
