@@ -24,6 +24,3 @@ Before building bigger architectures, I wanted to be able to explain the AWS ser
 - “Managed” almost always means you’re trading money for time and reliability.
 - S3 is the default storage layer for a reason. Most tools assume it exists.
 - The difference between a junior and a serious engineer is being able to explain why a service is wrong.
-
-## Next
-Week 2 moves into networking and security boundaries (VPC, subnets, routing, SGs/NACLs) and stress-testing failure modes on purpose.
