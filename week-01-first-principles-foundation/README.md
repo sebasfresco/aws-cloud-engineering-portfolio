@@ -1,24 +1,21 @@
 # Week 1 - First Principles Foundation
 
-This week was about building a base. Not memorizing AWS services, but being able to explain what they actually do, when they make sense, and when they’re a waste.
+Week 1 is the reset.
 
-## What I did
-I wrote down every AWS service I’ve used in production and forced myself to answer a simple question:
+Before building bigger architectures, I wanted to be able to explain the AWS services I’ve actually used in production, why I picked them, and what I’d pick instead if the constraints changed.
 
-**What problem does this solve, and what’s the trade-off?**
-
-## Main deliverable
+## Output
 - [`aws-services-audit.md`](./aws-services-audit.md)
 
-## What this sets up
-This is the foundation for everything in the rest of the 12-week blueprint:
-- choosing compute without guessing (EC2 vs Lambda vs containers)
-- choosing storage based on access patterns (S3 vs EBS vs EFS)
-- understanding managed services as a time vs money trade
-- being intentional about security boundaries (IAM + VPC)
-- keeping cost in mind early instead of “figuring it out later”
+## What I cared about this week
+- Choosing services based on constraints, not habits
+- Understanding the “real” trade-offs (cost, ops overhead, limits)
+- Writing notes that a teammate could actually learn from
 
-## Takeaways
-- Most services are simple when you strip away the branding. The confusion comes from options, not complexity.
-- “Managed” usually means you’re paying AWS to handle the annoying parts.
-- The real skill is being able to explain why you chose something, not just that you used it.
+## Quick takeaways
+- “Managed” almost always means you’re trading money for time and reliability.
+- S3 is the default storage layer for a reason. Most tools assume it exists.
+- The difference between a junior and a serious engineer is being able to explain why a service is wrong.
+
+## Next
+Week 2 moves into networking and security boundaries (VPC, subnets, routing, SGs/NACLs) and stress-testing failure modes on purpose.
