@@ -10,7 +10,7 @@ This is the smallest setup that behaves like a real system:
 
 ---
 
-## Architecture (High Level)
+## Architecture
 Internet → ALB → Target Group → EC2 instances (Auto Scaling Group)
 
 Baseline behavior:
@@ -31,7 +31,7 @@ Optional:
 
 ---
 
-## Build Order (Follow This Exactly)
+## Build Order
 
 ### 1) Networking
 Create or reuse a VPC with:
@@ -44,7 +44,7 @@ If this is wrong, the load balancer will exist but nobody can reach it.
 
 ---
 
-### 2) Security Groups (Keep It Tight)
+### 2) Security Groups
 Create two security groups.
 
 **ALB-SG**
@@ -140,9 +140,9 @@ Refresh a few times:
 
 ---
 
-## Failure Tests (Do These On Purpose)
+## Failure Tests
 
-### Test 1: Instance failure (terminate one instance)
+### Test 1: Instance failure
 Action:
 - terminate one EC2 instance in the ASG
 
@@ -157,7 +157,7 @@ Typical recovery:
 
 ---
 
-### Test 2: Application failure (stop httpd)
+### Test 2: Application failure
 Action:
 - stop httpd on one instance
 
@@ -172,7 +172,7 @@ If ELB health checks are not enabled:
 
 ---
 
-### Test 3: Misconfigured health checks (break it fast)
+### Test 3: Misconfigured health checks
 Action:
 - set health check path to something that returns 404
 
@@ -185,7 +185,7 @@ This is one of the cleanest ways to accidentally create downtime.
 
 ---
 
-### Test 4: Scale-out test (trigger ASG under load)
+### Test 4: Scale-out test
 Goal:
 Prove the scaling policy works and see the timing.
 
@@ -259,7 +259,7 @@ Steps:
 
 ---
 
-## Teardown Order (Reverse Dependencies)
+## Teardown Order
 1. Auto Scaling Group (set desired=0, then delete)
 2. Target Group
 3. ALB
@@ -269,7 +269,7 @@ Steps:
 
 ---
 
-## Cost Notes (Rough)
+## Cost Notes
 At small scale, the ALB is often the cost driver.
 
 Baseline:
