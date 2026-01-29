@@ -1,28 +1,49 @@
 # Week 3 - EC2 + Auto Scaling + ALB (High Availability)
 
-Week 3 was about building a real web tier that stays up even when instances fail.
+Week 3 was about building a web tier that stays up when instances fail.
 
-This is the smallest “production-valid” pattern I know:
-an ALB in front of an Auto Scaling Group across two AZs, with health checks acting as the gatekeeper.
+Instead of “one EC2 server behind a public IP,” this is the smallest production-style pattern you see everywhere in AWS:
 
-## Output
+**ALB → Target Group → Auto Scaling Group**  
+across **two Availability Zones**, with health checks deciding what counts as “healthy.”
+
+## Output (Clean Docs)
 - Runbook: [`docs/alb-asg-runbook.md`](./docs/alb-asg-runbook.md)
+- Cost analysis: [`docs/cost-analysis.md`](./docs/cost-analysis.md)
 - Diagram: [`infra/asg-alb-architecture-diagram.png`](./infra/asg-alb-architecture-diagram.png)
 - User data: [`scripts/userdata.sh`](./scripts/userdata.sh)
 
+## Notes (Raw Working Material)
+If you want the scratchpad thinking and receipts, they’re here:
+- [`notes/`](./notes)
+
+Includes:
+- ALB + ASG notes
+- EC2 instance type analysis
+- failure modes and recovery behavior
+- first principles breakdowns
+- cost report (PDF)
+
 ## What I built
-- EC2 Launch Template bootstrapped by user data
-- Target Group with health checks
-- Auto Scaling Group (min 2, max 4)
+- Launch Template (`t3.micro`) bootstrapped with user data
+- Target Group health checks (`HTTP GET /`)
+- Auto Scaling Group (min 2, desired 2, max 4)
 - Application Load Balancer routing traffic only to healthy instances
 
 ## What I tested
-- instance termination and recovery
-- application failure behavior (health checks)
-- common misconfigurations that cause 503s and churn loops
+- terminating an instance and watching ASG recover automatically
+- breaking the app (`httpd` down) and watching ALB cut it out
+- how fast bad health checks can cause a full outage (503 + churn loops)
+- the difference between “EC2 is running” and “the service is healthy”
 
-## Why this matters
-This is where AWS stops feeling like “servers in the cloud” and starts feeling like an actual system.
+## Cost reality
+Even with tiny instances, high availability is not free.
 
+At small scale, the ALB is usually the biggest fixed cost.
+That’s the trade: you pay for controlled failure and clean recovery.
+
+## Why it matters
 A load balancer is not just traffic distribution.
-It is how you keep users away from broken instances while the fleet heals itself.
+
+It keeps users away from broken instances while the fleet heals itself.  
+That’s the difference between deploying a server and running a service.
