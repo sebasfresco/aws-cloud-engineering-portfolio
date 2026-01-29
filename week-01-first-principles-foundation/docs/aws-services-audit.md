@@ -1,4 +1,4 @@
-# AWS Services Audit (First Principles)
+# AWS Services Audit
 
 These are the AWS services I’ve used in production so far, with quick comparisons and the reason I chose each one.
 
