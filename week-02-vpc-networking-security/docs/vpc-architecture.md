@@ -142,7 +142,7 @@ If the private route table does not have a valid path out, traffic dies inside t
 - Routing is everything. Security Groups will not save you from wrong route tables.
 - SGs and NACLs are not redundant. They do different jobs:
   - SGs = stateful, instance-level control
-  - NACLs = stateless, subnet-level guardrails :contentReference[oaicite:2]{index=2}
+  - NACLs = stateless, subnet-level guardrails 
 - When rules conflict, NACL denial wins at the subnet boundary. The instance never receives the traffic, even if the SG allows it.
-- The cost of private networking shows up fast (NAT + data transfer). :contentReference[oaicite:3]{index=3}
+- The cost of private networking shows up fast (NAT + data transfer).
 - Production-grade cloud networking is mostly about intentionality.
