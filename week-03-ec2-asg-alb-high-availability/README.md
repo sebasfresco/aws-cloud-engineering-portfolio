@@ -7,13 +7,13 @@ Instead of “one EC2 server behind a public IP,” this is the smallest product
 **ALB → Target Group → Auto Scaling Group**  
 across **two Availability Zones**, with health checks deciding what counts as “healthy.”
 
-## Output (Clean Docs)
+## Output
 - Runbook: [`docs/alb-asg-runbook.md`](./docs/alb-asg-runbook.md)
 - Cost analysis: [`docs/cost-analysis.md`](./docs/cost-analysis.md)
 - Diagram: [`infra/asg-alb-architecture-diagram.png`](./infra/asg-alb-architecture-diagram.png)
 - User data: [`scripts/userdata.sh`](./scripts/userdata.sh)
 
-## Notes (Raw Working Material)
+## Notes
 If you want the scratchpad thinking and receipts, they’re here:
 - [`notes/`](./notes)
 
