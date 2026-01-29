@@ -121,7 +121,7 @@ It is a managed service, and AWS charges a premium for convenience.
 
 ---
 
-## 6) Failure Testing (What Breaks)
+## 6) Failure Testing
 
 ### Test: remove NAT Gateway route from the private subnet
 **Expected:** private instances lose outbound internet access
