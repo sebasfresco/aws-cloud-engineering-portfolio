@@ -7,7 +7,7 @@ an ALB in front of an Auto Scaling Group across two AZs, with health checks acti
 
 ## Output
 - Runbook: [`docs/alb-asg-runbook.md`](./docs/alb-asg-runbook.md)
-- Diagram: [`infra/W3 Diagram.png`](./infra/W3%20Diagram.png)
+- Diagram: [`infra/asg-alb-architecture-diagram.png`](./infra/asg-alb-architecture-diagram.png)
 - User data: [`scripts/userdata.sh`](./scripts/userdata.sh)
 
 ## What I built
