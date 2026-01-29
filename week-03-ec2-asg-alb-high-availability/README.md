@@ -22,7 +22,6 @@ Includes:
 - EC2 instance type analysis
 - failure modes and recovery behavior
 - first principles breakdowns
-- cost report (PDF)
 
 ## What I built
 - Launch Template (`t3.micro`) bootstrapped with user data
