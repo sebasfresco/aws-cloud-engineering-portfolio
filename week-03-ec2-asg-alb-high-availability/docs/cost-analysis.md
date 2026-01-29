@@ -1,4 +1,4 @@
-# Cost Analysis - Auto Scaling Web Tier (Week 3)
+# Cost Analysis - Auto Scaling Web Tier
 
 ## Summary
 This week’s build is a minimal, highly available web tier:
