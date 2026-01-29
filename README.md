@@ -58,7 +58,7 @@ Systems / NOC Engineer | AWS | Security-minded
 - AWS Certified Solutions Architect – Associate  
 - CompTIA Cloud+  
 - CompTIA Security+  
-- ITIL® Foundation
+- ITIL Foundation
 
 ---
 
