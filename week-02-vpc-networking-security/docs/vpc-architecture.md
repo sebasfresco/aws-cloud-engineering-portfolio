@@ -117,7 +117,7 @@ It forces better architecture patterns instead of accidental exposure.
 | NAT data transfer | variable | charged per GB |
 
 NAT Gateway is the main cost center here.
-It is a managed service, and AWS charges a premium for convenience. :contentReference[oaicite:1]{index=1}
+It is a managed service, and AWS charges a premium for convenience.
 
 ---
 
