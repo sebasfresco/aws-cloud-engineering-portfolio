@@ -70,7 +70,7 @@ Create a Launch Template with:
   - installs httpd
   - starts the service
   - enables it on boot
-  - writes a basic HTML page that prints the instance ID
+  - writes a basic HTML page that prints the instance ID / availability zone
 
 That last step matters.
 It proves the ALB is actually balancing across instances.
