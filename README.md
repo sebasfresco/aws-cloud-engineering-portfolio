@@ -8,12 +8,13 @@ I’m documenting what I build, what breaks, and what I learned from it, with di
 If you want the quick tour:
 
 - **Week 3: High Availability Web Tier (EC2 + ASG + ALB)**
+  - LinkedIn article + video: [What Happens When an EC2 Instance Fails in Production? (ALB + Auto Scaling)](https://www.linkedin.com/pulse/what-happens-when-ec2-instance-fails-production-alb-auto-fresco-znj9e/)
   - Runbook: [`week-03-ec2-asg-alb-high-availability/docs/alb-asg-runbook.md`](week-03-ec2-asg-alb-high-availability/docs/alb-asg-runbook.md)
   - Diagram: [`week-03-ec2-asg-alb-high-availability/infra/asg-alb-architecture-diagram.png`](week-03-ec2-asg-alb-high-availability/infra/asg-alb-architecture-diagram.png)
   - Userdata: [`week-03-ec2-asg-alb-high-availability/scripts/userdata.sh`](week-03-ec2-asg-alb-high-availability/scripts/userdata.sh)
 
 - **Week 2: Production VPC Build (Networking + Security Boundaries)**
-  - LinkedIn article + video: [I Built a Production-Grade VPC From Scratch — Here’s What I Learned](https://www.linkedin.com/pulse/i-built-production-grade-vpc-from-scratch-heres-what-learned-fresco-gmome/)
+  - LinkedIn article + video: [How Network Boundaries Actually Work in AWS (VPC, Routing, and NAT)](https://www.linkedin.com/pulse/i-built-production-grade-vpc-from-scratch-heres-what-learned-fresco-gmome/)
   - Notes: [`week-02-vpc-networking-security/vpc-architecture.md`](week-02-vpc-networking-security/vpc-architecture.md)
   - Diagram: [`week-02-vpc-networking-security/vpc-architecture-diagram.png`](week-02-vpc-networking-security/vpc-architecture-diagram.png)
 
