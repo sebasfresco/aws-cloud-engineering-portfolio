@@ -7,6 +7,12 @@ I’m documenting what I build, what breaks, and what I learned from it, with di
 
 If you want the quick tour:
 
+- **Week 4: Storage Options (S3 vs EBS vs EFS)**
+  - LinkedIn article + video: [AWS Storage: How Access Patterns, Benchmarks, and Cost Should Drive Every Decision](https://www.linkedin.com/pulse/aws-storage-options-first-principles-guide-sebasti%C3%A3o-fresco-jrose/)
+  - Decision Matrix: [AWS Storage Decision Matrix Showcased On LinkedIn Video](https://claude.ai/public/artifacts/627f0a9e-98d3-42c8-b014-06401e5c0f8d)
+  - Diagram: [`week-04-s3-ebs-efs-storage-strategy/infra/scenario.jpg`](week-04-s3-ebs-efs-storage-strategy/infra/scenario.jpg)
+  - Notes: [`week-04-s3-ebs-efs-storage-strategy/notes/first_principles.pdf`](week-04-s3-ebs-efs-storage-strategy/notes/first_principles.pdf)
+
 - **Week 3: High Availability Web Tier (EC2 + ASG + ALB)**
   - LinkedIn article + video: [What Happens When an EC2 Instance Fails in Production? (ALB + Auto Scaling)](https://www.linkedin.com/pulse/what-happens-when-ec2-instance-fails-production-alb-auto-fresco-znj9e/)
   - Runbook: [`week-03-ec2-asg-alb-high-availability/docs/alb-asg-runbook.md`](week-03-ec2-asg-alb-high-availability/docs/alb-asg-runbook.md)
@@ -28,7 +34,7 @@ If you want the quick tour:
 - [x] Week 1: First Principles Foundation  
 - [x] Week 2: VPC Networking + Security  
 - [x] Week 3: EC2 + Auto Scaling + ALB  
-- [ ] Week 4: Storage Strategy (S3 / EBS / EFS)  
+- [x] Week 4: Storage Strategy (S3 / EBS / EFS)  
 - [ ] Week 5: Terraform Fundamentals + Modules  
 - [ ] Week 6: CI/CD (CodePipeline Automation)  
 - [ ] Week 7: IAM Policies + Roles + Audit  
@@ -53,7 +59,7 @@ Each week is its own deliverable:
 ## About Me
 
 **Sebastião Fresco**  
-Systems / NOC Engineer | AWS | Security-minded
+Infrastructure Engineer
 
 **Certifications**
 - AWS Certified Solutions Architect – Associate  
