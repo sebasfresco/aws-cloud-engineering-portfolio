@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storage Strategy Recommendation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f5f5f7;
+    color: #1d1d1f;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .page {
+    width: 816px;
+    min-height: 1056px;
+    background: #fff;
+    margin: 32px auto;
+    padding: 72px 80px;
+    position: relative;
+  }
+
+  .page + .page {
+    border-top: none;
+  }
+
+  /* Cover / Header */
+  .cover-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6e6e73;
+    margin-bottom: 48px;
+  }
+
+  .cover-title {
+    font-size: 34px;
+    font-weight: 300;
+    color: #1d1d1f;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .cover-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: #6e6e73;
+    margin-bottom: 56px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    padding-top: 32px;
+    border-top: 1px solid #e0e0e5;
+    margin-bottom: 56px;
+  }
+
+  .meta-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6e6e73;
+    margin-bottom: 4px;
+  }
+
+  .meta-value {
+    font-size: 13px;
+    font-weight: 400;
+    color: #1d1d1f;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6e6e73;
+    margin-bottom: 12px;
+  }
+
+  .section-body {
+    font-size: 13px;
+    font-weight: 300;
+    color: #1d1d1f;
+    line-height: 1.7;
+  }
+
+  /* Highlight box */
+  .highlight {
+    background: #f5f5f7;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+  }
+
+  .highlight-number {
+    font-size: 36px;
+    font-weight: 300;
+    color: #1d1d1f;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+
+  .highlight-desc {
+    font-size: 12px;
+    color: #6e6e73;
+    margin-top: 4px;
+    font-weight: 300;
+  }
+
+  .highlight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid #e0e0e5;
+    margin: 36px 0;
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+
+  th {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6e6e73;
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e0e0e5;
+  }
+
+  td {
+    font-size: 12.5px;
+    font-weight: 300;
+    color: #1d1d1f;
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0f0f2;
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .td-bold {
+    font-weight: 500;
+  }
+
+  .td-muted {
+    color: #6e6e73;
+    font-size: 12px;
+  }
+
+  /* Decision pills */
+  .decision-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid #f0f0f2;
+  }
+
+  .decision-row:last-child { border-bottom: none; }
+
+  .d-num {
+    font-size: 11px;
+    font-weight: 500;
+    color: #6e6e73;
+    min-width: 20px;
+    padding-top: 1px;
+  }
+
+  .d-content { flex: 1; }
+
+  .d-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1d1d1f;
+    margin-bottom: 2px;
+  }
+
+  .d-choice {
+    font-size: 12px;
+    color: #0071e3;
+    font-weight: 400;
+    margin-bottom: 3px;
+  }
+
+  .d-rationale {
+    font-size: 12px;
+    color: #6e6e73;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* Cost summary */
+  .cost-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: #e0e0e5;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .cost-cell {
+    background: #fff;
+    padding: 20px 24px;
+  }
+
+  .cost-cell.shaded { background: #f5f5f7; }
+
+  .cost-cell-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6e6e73;
+    margin-bottom: 6px;
+  }
+
+  .cost-cell-value {
+    font-size: 22px;
+    font-weight: 300;
+    color: #1d1d1f;
+    letter-spacing: -0.5px;
+  }
+
+  .cost-cell-sub {
+    font-size: 11px;
+    color: #6e6e73;
+    margin-top: 2px;
+  }
+
+  .cost-cell.green .cost-cell-value { color: #1d7a4a; }
+
+  /* Compliance */
+  .compliance-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f2;
+  }
+
+  .compliance-row:last-child { border-bottom: none; }
+
+  .c-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: #6e6e73;
+    background: #f5f5f7;
+    border-radius: 4px;
+    padding: 3px 8px;
+    min-width: 100px;
+    text-align: center;
+  }
+
+  .c-desc {
+    font-size: 12.5px;
+    font-weight: 300;
+    color: #1d1d1f;
+  }
+
+  /* Next steps */
+  .steps {
+    counter-reset: step;
+  }
+
+  .step-item {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f2;
+    align-items: flex-start;
+  }
+
+  .step-item:last-child { border-bottom: none; }
+
+  .step-num {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6e6e73;
+    min-width: 20px;
+  }
+
+  .step-text {
+    font-size: 13px;
+    font-weight: 300;
+    color: #1d1d1f;
+    line-height: 1.5;
+  }
+
+  .step-sub {
+    font-size: 11.5px;
+    color: #6e6e73;
+    margin-top: 2px;
+  }
+
+  /* Footer */
+  .footer {
+    position: absolute;
+    bottom: 40px;
+    left: 80px;
+    right: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e0e0e5;
+    padding-top: 16px;
+  }
+
+  .footer-left {
+    font-size: 10px;
+    color: #6e6e73;
+    font-weight: 300;
+  }
+
+  .footer-right {
+    font-size: 10px;
+    color: #6e6e73;
+    font-weight: 300;
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="cover-label">Fresco Enterprises &nbsp;·&nbsp; Confidential</div>
+
+  <div class="cover-title">S3 Storage Strategy<br>Recommendation</div>
+  <div class="cover-subtitle">Tiered architecture to reduce cost while maintaining compliance</div>
+
+  <div class="meta-grid">
+    <div>
+      <div class="meta-label">Client</div>
+      <div class="meta-value">Fresco Enterprises</div>
+    </div>
+    <div>
+      <div class="meta-label">Date</div>
+      <div class="meta-value">March 2, 2026</div>
+    </div>
+    <div>
+      <div class="meta-label">Author</div>
+      <div class="meta-value">Sebastiao Fresco<br><span style="color:#6e6e73;font-size:12px;">Cloud Engineer</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Executive Summary</div>
+    <div class="section-body">
+      Fresco Enterprises manages 10 TB of data with mixed access patterns, currently stored at a flat Standard tier regardless of access frequency. This document recommends a three-bucket tiered S3 architecture that reduces annual storage costs by approximately 25% while maintaining 99.99% availability for active data and satisfying 7-year retention requirements through Glacier Deep Archive with Object Lock.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Problem Statement</div>
+    <div class="section-body">
+      All 10 TB — including 2 TB of archival data accessed less than once per year — is stored at Standard pricing ($0.023/GB-mo). This results in significant overspend on cold data that does not require immediate retrieval. A tiered approach aligned to actual access behavior eliminates this waste without affecting operational availability.
+    </div>
+  </div>
+
+  <div class="highlight-grid" style="margin-bottom:40px;">
+    <div class="highlight">
+      <div class="highlight-number">8 TB</div>
+      <div class="highlight-desc">Active data — accessed monthly</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-number">2 TB</div>
+      <div class="highlight-desc">Archive — accessed &lt;1×/year</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-number">7 yr</div>
+      <div class="highlight-desc">Minimum retention requirement</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Proposed Architecture</div>
+    <div class="section-body" style="margin-bottom:16px;">Three dedicated S3 buckets, each with a lifecycle policy matched to its workload.</div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Bucket</th>
+          <th>Size</th>
+          <th>Storage Class</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-bold">active-data</td>
+          <td>8 TB</td>
+          <td>Standard → IA (day 91+)</td>
+          <td class="td-muted">Project files, reports, intelligence products</td>
+        </tr>
+        <tr>
+          <td class="td-bold">archive-data</td>
+          <td>2 TB</td>
+          <td>Glacier Deep Archive</td>
+          <td class="td-muted">Historical records, completed project archives</td>
+        </tr>
+        <tr>
+          <td class="td-bold">access-logs</td>
+          <td>~50 GB/mo</td>
+          <td>Standard → IA → Glacier → Expire</td>
+          <td class="td-muted">S3 server logs + CloudTrail audit trail</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">Fresco Enterprises · Storage Strategy Recommendation · Confidential</div>
+    <div class="footer-right">1 of 3</div>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+
+  <div class="section">
+    <div class="section-label">Design Decisions</div>
+
+    <div class="decision-row">
+      <div class="d-num">01</div>
+      <div class="d-content">
+        <div class="d-title">Active Data Lifecycle</div>
+        <div class="d-choice">Standard → Standard-IA after 90 days</div>
+        <div class="d-rationale">Defense project deliverables see the heaviest access in the first 90 days — review cycles, revisions, submissions. After that window, access drops sharply. The 90-day threshold aligns the transition to observed behavior, avoiding IA retrieval fees during the active phase. Validate with S3 Analytics before production deployment.</div>
+      </div>
+    </div>
+
+    <div class="decision-row">
+      <div class="d-num">02</div>
+      <div class="d-content">
+        <div class="d-title">Archive Storage Class</div>
+        <div class="d-choice">Glacier Deep Archive</div>
+        <div class="d-rationale">At $0.00099/GB-mo, Glacier Deep Archive is the lowest-cost S3 storage tier. 12–48 hour bulk retrieval is acceptable for historical records accessed less than once per year. Cost is 95% less than Standard.</div>
+      </div>
+    </div>
+
+    <div class="decision-row">
+      <div class="d-num">03</div>
+      <div class="d-content">
+        <div class="d-title">Encryption</div>
+        <div class="d-choice">SSE-KMS on all buckets</div>
+        <div class="d-rationale">Satisfies NIST 800-53 SC-28. Supports key rotation and provides a full audit trail via CloudTrail for every encryption and decryption event.</div>
+      </div>
+    </div>
+
+    <div class="decision-row">
+      <div class="d-num">04</div>
+      <div class="d-content">
+        <div class="d-title">Object Lock — Archive Bucket</div>
+        <div class="d-choice">Enabled · Compliance Mode · 7-year retention</div>
+        <div class="d-rationale">Compliance mode prevents deletion by any user, including the root account. This is a one-way door — once set it cannot be shortened — making it appropriate for regulatory retention. Governance mode is insufficient for this use case.</div>
+      </div>
+    </div>
+
+    <div class="decision-row">
+      <div class="d-num">05</div>
+      <div class="d-content">
+        <div class="d-title">Versioning</div>
+        <div class="d-choice">Enabled on active-data and archive-data</div>
+        <div class="d-rationale">Protects against accidental deletion and overwrites. Old versions on active-data transition to IA after 30 days to contain versioning overhead costs.</div>
+      </div>
+    </div>
+
+    <div class="decision-row">
+      <div class="d-num">06</div>
+      <div class="d-content">
+        <div class="d-title">Public Access</div>
+        <div class="d-choice">Blocked on all buckets</div>
+        <div class="d-rationale">Mandatory for defense contractor environments. Enforced at the bucket and account level.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">Cost Analysis</div>
+
+    <table style="margin-bottom:20px;">
+      <thead>
+        <tr>
+          <th>Bucket</th>
+          <th>Line Item</th>
+          <th style="text-align:right;">Monthly</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="4" class="td-bold">active-data</td>
+          <td>Standard — 5,734 GB × $0.023</td>
+          <td style="text-align:right;">$131.88</td>
+        </tr>
+        <tr>
+          <td>Standard-IA — 2,458 GB × $0.0125</td>
+          <td style="text-align:right;">$30.73</td>
+        </tr>
+        <tr>
+          <td>KMS (~$1/key + $0.03/10K req)</td>
+          <td style="text-align:right;">~$5.00</td>
+        </tr>
+        <tr>
+          <td>Requests (500K PUT / 2M GET)</td>
+          <td style="text-align:right;">~$3.50</td>
+        </tr>
+        <tr>
+          <td class="td-bold">archive-data</td>
+          <td>Glacier Deep Archive + KMS</td>
+          <td style="text-align:right;">~$3.53</td>
+        </tr>
+        <tr>
+          <td class="td-bold">access-logs</td>
+          <td>Mixed lifecycle</td>
+          <td style="text-align:right;">~$3.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cost-summary">
+    <div class="cost-cell">
+      <div class="cost-cell-label">Proposed · Monthly</div>
+      <div class="cost-cell-value">$177.64</div>
+      <div class="cost-cell-sub">Tiered architecture</div>
+    </div>
+    <div class="cost-cell shaded">
+      <div class="cost-cell-label">Baseline · Monthly</div>
+      <div class="cost-cell-value">$235.52</div>
+      <div class="cost-cell-sub">All Standard, no lifecycle</div>
+    </div>
+    <div class="cost-cell green">
+      <div class="cost-cell-label">Annual Savings</div>
+      <div class="cost-cell-value">~$695</div>
+      <div class="cost-cell-sub">~25% reduction at 10 TB</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">Fresco Enterprises · Storage Strategy Recommendation · Confidential</div>
+    <div class="footer-right">2 of 3</div>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page">
+
+  <div class="section">
+    <div class="section-label">Savings at Scale</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Data Volume</th>
+          <th style="text-align:right;">Annual Savings</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>10 TB</td>
+          <td style="text-align:right;">~$695</td>
+          <td class="td-muted">Current environment</td>
+        </tr>
+        <tr>
+          <td>100 TB</td>
+          <td style="text-align:right;">~$7,000</td>
+          <td class="td-muted">Small program growth</td>
+        </tr>
+        <tr>
+          <td>1 PB</td>
+          <td style="text-align:right;">~$70,000</td>
+          <td class="td-muted">Enterprise scale</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">Compliance Mapping</div>
+
+    <div class="compliance-row">
+      <div class="c-tag">NIST SC-28</div>
+      <div class="c-desc">Encryption at rest via SSE-KMS across all buckets</div>
+    </div>
+    <div class="compliance-row">
+      <div class="c-tag">NIST AC-3</div>
+      <div class="c-desc">Public access blocked at bucket and account level</div>
+    </div>
+    <div class="compliance-row">
+      <div class="c-tag">NIST SI-12</div>
+      <div class="c-desc">Versioning enabled to protect information integrity</div>
+    </div>
+    <div class="compliance-row">
+      <div class="c-tag">NIST AU-2</div>
+      <div class="c-desc">CloudTrail logging active for all S3 and KMS events</div>
+    </div>
+    <div class="compliance-row">
+      <div class="c-tag">NIST AU-11</div>
+      <div class="c-desc">Object Lock (Compliance mode) enforces 7-year retention</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">Next Steps</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">01</div>
+        <div class="step-text">
+          Review and approve architecture
+          <div class="step-sub">Stakeholder sign-off on bucket design, lifecycle thresholds, and Object Lock configuration</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">02</div>
+        <div class="step-text">
+          Deploy to development environment
+          <div class="step-sub">Provision all three buckets with lifecycle policies, encryption, and access controls</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">03</div>
+        <div class="step-text">
+          Enable S3 Analytics on active-data bucket
+          <div class="step-sub">Run for 30 days to validate 90-day lifecycle threshold against actual access patterns</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">04</div>
+        <div class="step-text">
+          Migrate sample dataset (100 GB) and validate
+          <div class="step-sub">Confirm retrieval behavior, cost alignment, and compliance posture before full migration</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">05</div>
+        <div class="step-text">
+          Execute full migration with cutover plan
+          <div class="step-sub">Coordinate with operations to minimize disruption; document rollback procedure</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">Fresco Enterprises · Storage Strategy Recommendation · Confidential</div>
+    <div class="footer-right">3 of 3</div>
+  </div>
+</div>
+
+</body>
+</html>
