@@ -1,14 +1,24 @@
-# AWS Terraform Autoscaling
+# Week 5 — Terraform Fundamentals + Modules (Autoscaling Web Tier)
 
-A modular Terraform project that provisions a fully autoscaling web tier on AWS: VPC, Application Load Balancer, Auto Scaling Group, scaling policies, and CloudWatch monitoring — with separate dev and prod environments.
+Week 5 was about moving from ClickOps to code.
+
+Weeks 2–3 proved I could build a VPC and a high-availability web tier by hand. This week I rebuilt the same architecture — ALB, Auto Scaling Group, CloudWatch alarms — entirely in Terraform with reusable modules and separate dev/prod environments. One `terraform apply` creates everything. One `terraform destroy` tears it all down.
+
+**ALB → Target Group → ASG (2 AZs) + CloudWatch alarm → SNS**
+
+![Week 5 Architecture](./infra/week5-architecture.png)
 
 ---
 
-## Project Overview
+## Output
 
-This project provisions a load-balanced, autoscaling web architecture on AWS using reusable Terraform modules. Instances run Apache httpd behind an ALB and scale automatically based on CPU utilization.
+- Architecture diagram: [`infra/week5-architecture.png`](./infra/week5-architecture.png)
+- Decision log: [`docs/DECISIONS.md`](./docs/DECISIONS.md)
+- Terraform source: [`main.tf`](./main.tf), [`modules/`](./modules/)
 
-### Resources Created
+---
+
+## What I built
 
 | Category | Resource | Details |
 | --- | --- | --- |
@@ -23,6 +33,20 @@ This project provisions a load-balanced, autoscaling web architecture on AWS usi
 | Security | Web instance security group | HTTP + SSH inbound |
 | Monitoring | CloudWatch alarm | CPU > 80% sustained for 10 min |
 | Monitoring | SNS topic | Alert notifications |
+
+### Module responsibilities
+
+**`modules/vpc`** — Owns all networking. Creates the VPC, IGW, subnets distributed across dynamically discovered AZs, and the public route table. Private subnets intentionally have no NAT Gateway (cost optimization).
+
+**`modules/security_group`** — Reusable SG with a dynamic `ingress_rules` input. Used twice in root: `module.alb_sg` (HTTP only) and `module.web_sg` (HTTP + SSH).
+
+---
+
+## What I tested
+
+- Running `terraform plan` to verify the dependency graph resolves correctly before any resources exist
+- Watching the ASG replace an instance after ELB health checks failed
+- Running `terraform destroy` and verifying zero resources remain (no orphaned ENIs, no dangling SGs)
 
 ---
 
@@ -42,7 +66,7 @@ This project provisions a load-balanced, autoscaling web architecture on AWS usi
 ```bash
 # 1. Clone the repo
 git clone <repo-url>
-cd aws-terraform-autoscaling
+cd week-05-terraform-fundamentals-modules
 
 # 2. Initialize Terraform (downloads AWS provider)
 terraform init
@@ -69,14 +93,17 @@ terraform destroy -var-file="dev.tfvars"
 
 ## Project Structure
 
-```
-aws-terraform-autoscaling/
+```text
+week-05-terraform-fundamentals-modules/
 ├── main.tf                   # Root module: provider, ALB, ASG, scaling, monitoring
 ├── variables.tf              # Input variables (region, instance type, CIDRs, ASG sizing)
 ├── outputs.tf                # Outputs: VPC ID, ALB DNS name, ASG name
 ├── dev.tfvars                # Dev environment values (not committed)
 ├── prod.tfvars               # Prod environment values (not committed)
-├── DECISIONS.md              # Architecture decisions and Terraform concepts
+├── docs/
+│   └── DECISIONS.md          # Architecture decisions and Terraform concepts
+├── infra/
+│   └── week5-architecture.png  # Architecture diagram
 └── modules/
     ├── vpc/
     │   ├── main.tf           # VPC, IGW, subnets, route tables, associations
@@ -87,12 +114,6 @@ aws-terraform-autoscaling/
         ├── variables.tf      # name, description, vpc_id, ingress_rules
         └── outputs.tf        # security_group_id
 ```
-
-### Module Responsibilities
-
-**`modules/vpc`** — Owns all networking. Creates the VPC, IGW, subnets distributed across dynamically discovered AZs, and the public route table. Private subnets intentionally have no NAT Gateway (cost optimization).
-
-**`modules/security_group`** — Reusable SG with a dynamic `ingress_rules` input. Used twice in root: `module.alb_sg` (HTTP only) and `module.web_sg` (HTTP + SSH).
 
 ---
 
@@ -126,7 +147,7 @@ After `terraform apply`, the following values are available:
 
 ---
 
-## Cost Estimate (us-east-1)
+## Cost reality (us-east-1)
 
 | Resource | Est. Monthly Cost |
 | --- | --- |
@@ -143,7 +164,7 @@ After `terraform apply`, the following values are available:
 
 ---
 
-## What I Learned
+## What I learned
 
 1. **Terraform's dependency graph makes resource ordering irrelevant** — when a subnet references `aws_vpc.main.id`, Terraform knows the VPC must be created first regardless of file position.
 2. **ELB health checks catch what EC2 checks miss** — an instance can be "running" at the hypervisor level while the application process has crashed. `health_check_type = "ELB"` verifies the app actually responds.
