@@ -7,6 +7,11 @@ I’m documenting what I build, what breaks, and what I learned from it, with di
 
 If you want the quick tour:
 
+- **Week 5: Terraform Fundamentals + Modules**
+  - LinkedIn article + video: [Terraform Deployed My Entire AWS Architecture Under 5 Minutes](https://www.linkedin.com/pulse/terraform-deployed-my-entire-aws-architecture-under-5-fresco-glife/)
+  - Decisions: [`week-05-terraform-fundamentals-modules/docs/DECISIONS.md`](week-05-terraform-fundamentals-modules/docs/DECISIONS.md)
+  - Diagram: [`week-05-terraform-fundamentals-modules/infra/week5-architecture.png`](week-05-terraform-fundamentals-modules/infra/week5-architecture.png)
+
 - **Week 4: Storage Options (S3 vs EBS vs EFS)**
   - LinkedIn article + video: [AWS Storage: How Access Patterns, Benchmarks, and Cost Should Drive Every Decision](https://www.linkedin.com/pulse/aws-storage-options-first-principles-guide-sebasti%C3%A3o-fresco-jrose/)
   - Decision Matrix: [AWS Storage Decision Matrix Showcased On LinkedIn Video](https://claude.ai/public/artifacts/627f0a9e-98d3-42c8-b014-06401e5c0f8d)
@@ -35,7 +40,7 @@ If you want the quick tour:
 - [x] Week 2: VPC Networking + Security  
 - [x] Week 3: EC2 + Auto Scaling + ALB  
 - [x] Week 4: Storage Strategy (S3 / EBS / EFS)  
-- [ ] Week 5: Terraform Fundamentals + Modules  
+- [x] Week 5: Terraform Fundamentals + Modules
 - [ ] Week 6: CI/CD (CodePipeline Automation)  
 - [ ] Week 7: IAM Policies + Roles + Audit  
 - [ ] Week 8: VPC Hardening + Encryption + Compliance  
