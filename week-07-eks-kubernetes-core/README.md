@@ -1,6 +1,6 @@
-# Week 7 -- Kubernetes (EKS)
+# Week 7 — EKS / Kubernetes Core
 
-> **What this proves:** Can deploy to EKS, manage pods and services, and explain when Kubernetes is and is not the right choice.
+> **What this proves:** Can deploy to EKS, manage pods and services, and explain when Kubernetes is the right choice — aligned with DoD DSOP and Platform One mandates.
 
 ## Status: Planned
 
@@ -10,7 +10,7 @@
 - Kubernetes deployments, services, and ingress
 - Namespace isolation and RBAC
 - Helm charts or manifests for application deployment
-- Comparison: when EKS vs ECS vs Fargate
+- Comparison: when EKS vs ECS vs Fargate in GovCloud
 
 ## Decision doc
 

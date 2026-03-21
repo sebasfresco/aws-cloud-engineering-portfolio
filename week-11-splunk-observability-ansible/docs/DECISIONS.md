@@ -1,4 +1,4 @@
-# Kubernetes (EKS) -- Decision Document
+# Splunk + Observability + Ansible — Decision Document
 
 ## What I built
 

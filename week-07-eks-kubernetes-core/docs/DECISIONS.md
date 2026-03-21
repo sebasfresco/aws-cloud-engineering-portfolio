@@ -1,4 +1,4 @@
-# DevSecOps Pipelines -- Decision Document
+# EKS / Kubernetes Core — Decision Document
 
 ## What I built
 

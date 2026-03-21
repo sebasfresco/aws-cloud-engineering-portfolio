@@ -1,4 +1,4 @@
-# Security + Compliance (NIST / CIS) -- Decision Document
+# CI/CD the DoD Way + Security Scanning — Decision Document
 
 ## What I built
 

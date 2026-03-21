@@ -1,4 +1,4 @@
-# Terraform 3-Tier Production Architecture -- Decision Document
+# Security Services + Compliance — Decision Document
 
 ## What I built
 
