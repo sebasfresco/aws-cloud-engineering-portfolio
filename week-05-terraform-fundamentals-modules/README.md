@@ -1,8 +1,8 @@
 # Week 5 — Terraform Fundamentals + Modules (Autoscaling Web Tier)
 
-Week 5 was about moving from ClickOps to code.
+> **What this proves:** Can codify a multi-AZ web tier in Terraform with reusable modules, eliminate drift, and deploy or destroy in one command.
 
-Weeks 2–3 proved I could build a VPC and a high-availability web tier by hand. This week I rebuilt the same architecture — ALB, Auto Scaling Group, CloudWatch alarms — entirely in Terraform with reusable modules and separate dev/prod environments. One `terraform apply` creates everything. One `terraform destroy` tears it all down.
+Weeks 2-3 proved I could build a VPC and a high-availability web tier by hand. This week I rebuilt the same architecture -- ALB, Auto Scaling Group, CloudWatch alarms -- entirely in Terraform with reusable modules and separate dev/prod environments. One `terraform apply` creates everything. One `terraform destroy` tears it all down.
 
 **ALB → Target Group → ASG (2 AZs) + CloudWatch alarm → SNS**
 
@@ -164,13 +164,13 @@ After `terraform apply`, the following values are available:
 
 ---
 
-## What I learned
+## Design rationale
 
-1. **Terraform's dependency graph makes resource ordering irrelevant** — when a subnet references `aws_vpc.main.id`, Terraform knows the VPC must be created first regardless of file position.
-2. **ELB health checks catch what EC2 checks miss** — an instance can be "running" at the hypervisor level while the application process has crashed. `health_check_type = "ELB"` verifies the app actually responds.
-3. **Separate security groups per tier enforce least privilege** — the ALB accepts public traffic, but instances only accept traffic from the ALB. A shared SG would expose instances directly to the internet.
-4. **Non-overlapping VPC CIDRs between environments enable future peering** — if dev and prod both used `10.0.0.0/16`, you could never connect them or route between them unambiguously.
-5. **Modules eliminate duplication and drift** — one VPC module serves every environment. Change it once, and every `terraform apply` picks up the update instead of editing N copies.
+1. **Terraform's dependency graph resolves ordering from references.** A subnet referencing `aws_vpc.main.id` tells Terraform the VPC must exist first. File position is irrelevant.
+2. **ELB health checks catch what EC2 checks miss.** An instance can be "running" at the hypervisor level while the application process has crashed. `health_check_type = "ELB"` verifies the app actually responds.
+3. **Separate security groups per tier enforce least privilege.** The ALB accepts public traffic, but instances only accept traffic from the ALB. A shared SG would expose instances directly to the internet.
+4. **Non-overlapping VPC CIDRs between environments enable future peering.** If dev and prod both used `10.0.0.0/16`, you could never connect them or route between them unambiguously.
+5. **Modules eliminate duplication and drift.** One VPC module serves every environment. Change it once, and every `terraform apply` picks up the update instead of editing N copies.
 
 ---
 
