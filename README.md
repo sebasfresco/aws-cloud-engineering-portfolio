@@ -17,9 +17,9 @@ Every project includes a decision document: what I built, what I considered inst
 | 4 | [Storage Strategy](week-04-s3-ebs-efs-storage-strategy/) | Can pick the right storage tier and defend it with numbers | [Decision doc](week-04-s3-ebs-efs-storage-strategy/docs/DECISIONS.md) |
 | 5 | [Terraform IaC](week-05-terraform-fundamentals-modules/) | Can codify infrastructure, eliminate drift, deploy in one command | [Decision doc](week-05-terraform-fundamentals-modules/docs/DECISIONS.md) |
 | 6 | [Docker + Containers](week-06-docker-container-fundamentals/) | Can containerize a workload with multi-stage builds and image hardening | Planned |
-| 7 | [EKS / Kubernetes](week-07-eks-kubernetes-core/) | Can deploy to EKS aligned with DoD DSOP and Platform One mandates | Planned |
+| 7 | [EKS / Kubernetes](week-07-eks-kubernetes-core/) | Can deploy to EKS aligned with DoW DSOP and Platform One mandates | Planned |
 | 8 | [Security + Compliance](week-08-security-services-compliance/) | Can implement the detective control quad and document for ATO | Planned |
-| 9 | [CI/CD the DoD Way](week-09-cicd-dod-way-security-scanning/) | Can build CI/CD with automated security scanning and policy gates | Planned |
+| 9 | [CI/CD the DoW Way](week-09-cicd-dow-way-security-scanning/) | Can build CI/CD with automated security scanning and policy gates | Planned |
 | 10 | [Production EKS 3-Tier](week-10-production-eks-3tier-architecture/) | Can design a production-grade 3-tier architecture on EKS | Planned |
 | 11 | [Splunk + Observability + Ansible](week-11-splunk-observability-ansible/) | Can instrument monitoring, integrate SIEM, and automate STIG hardening | Planned |
 | 12 | [Portfolio Polish](week-12-portfolio-polish-application-blitz/) | Can present cloud engineering work as a cohesive portfolio | Planned |
@@ -45,7 +45,7 @@ Every project includes a decision document: what I built, what I considered inst
 - [ ] Week 6: Docker + Container Fundamentals
 - [ ] Week 7: EKS / Kubernetes Core
 - [ ] Week 8: Security Services + Compliance
-- [ ] Week 9: CI/CD the DoD Way + Security Scanning
+- [ ] Week 9: CI/CD the DoW Way + Security Scanning
 - [ ] Week 10: Production EKS 3-Tier Architecture
 - [ ] Week 11: Splunk + Observability + Ansible
 - [ ] Week 12: Portfolio Polish + Application Blitz

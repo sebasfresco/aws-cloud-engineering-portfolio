@@ -1,6 +1,6 @@
 # Week 6 — Docker + Container Fundamentals
 
-> **What this proves:** Can containerize a workload with Dockerfiles, multi-stage builds, and image optimization for DoD environments.
+> **What this proves:** Can containerize a workload with Dockerfiles, multi-stage builds, and image optimization for DoW environments.
 
 ## Status: Planned
 
@@ -10,7 +10,7 @@
 - Container image optimization (minimal base images, layer caching)
 - Docker Compose for local multi-container development
 - Container networking and volume management
-- Image scanning and security hardening for DoD registries
+- Image scanning and security hardening for DoW registries
 
 ## Decision doc
 

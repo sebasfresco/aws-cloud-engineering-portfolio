@@ -1,4 +1,4 @@
-# CI/CD the DoD Way + Security Scanning — Decision Document
+# CI/CD the DoW Way + Security Scanning — Decision Document
 
 ## What I built
 

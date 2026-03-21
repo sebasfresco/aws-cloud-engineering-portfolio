@@ -1,6 +1,6 @@
-# Week 9 — CI/CD the DoD Way + Security Scanning
+# Week 9 — CI/CD the DoW Way + Security Scanning
 
-> **What this proves:** Can build a CI/CD pipeline with automated security scanning, policy gates, and deployment patterns aligned with DoD DevSecOps practices.
+> **What this proves:** Can build a CI/CD pipeline with automated security scanning, policy gates, and deployment patterns aligned with DoW DevSecOps practices.
 
 ## Status: Planned
 

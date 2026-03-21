@@ -1,6 +1,6 @@
 # Week 7 — EKS / Kubernetes Core
 
-> **What this proves:** Can deploy to EKS, manage pods and services, and explain when Kubernetes is the right choice — aligned with DoD DSOP and Platform One mandates.
+> **What this proves:** Can deploy to EKS, manage pods and services, and explain when Kubernetes is the right choice — aligned with DoW DSOP and Platform One mandates.
 
 ## Status: Planned
 
