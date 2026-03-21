@@ -1,4 +1,4 @@
-# Multi-Account + Capstone -- Decision Document
+# Production EKS 3-Tier Architecture — Decision Document
 
 ## What I built
 
