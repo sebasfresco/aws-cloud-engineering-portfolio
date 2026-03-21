@@ -1,80 +1,55 @@
-# 12-Week AWS Cloud Engineer Blueprint
+# AWS Cloud Engineering Portfolio
 
-This repo is my 12-week AWS Cloud Engineer blueprint.
-I’m documenting what I build, what breaks, and what I learned from it, with diagrams, runbooks, and cost/security trade-offs along the way.
+**Sebastiao Fresco** | Infrastructure Engineer
+AWS Solutions Architect Associate | CompTIA Cloud+ | CompTIA Security+ | ITIL Foundation
 
-## Start Here
+Every project includes a decision document: what I built, what I considered instead, why I chose this, what breaks if you change it, what it costs.
 
-If you want the quick tour:
+---
 
-- **Week 5: Terraform Fundamentals + Modules**
-  - LinkedIn article + video: [Terraform Deployed My Entire AWS Architecture Under 5 Minutes](https://www.linkedin.com/pulse/terraform-deployed-my-entire-aws-architecture-under-5-fresco-glife/)
-  - Decisions: [`week-05-terraform-fundamentals-modules/docs/DECISIONS.md`](week-05-terraform-fundamentals-modules/docs/DECISIONS.md)
-  - Diagram: [`week-05-terraform-fundamentals-modules/infra/week5-architecture.png`](week-05-terraform-fundamentals-modules/infra/week5-architecture.png)
+## What Each Week Proves
 
-- **Week 4: Storage Options (S3 vs EBS vs EFS)**
-  - LinkedIn article + video: [AWS Storage: How Access Patterns, Benchmarks, and Cost Should Drive Every Decision](https://www.linkedin.com/pulse/aws-storage-options-first-principles-guide-sebasti%C3%A3o-fresco-jrose/)
-  - Decision Matrix: [AWS Storage Decision Matrix Showcased On LinkedIn Video](https://claude.ai/public/artifacts/627f0a9e-98d3-42c8-b014-06401e5c0f8d)
-  - Diagram: [`week-04-s3-ebs-efs-storage-strategy/infra/scenario.jpg`](week-04-s3-ebs-efs-storage-strategy/infra/scenario.jpg)
-  - Notes: [`week-04-s3-ebs-efs-storage-strategy/notes/first_principles.pdf`](week-04-s3-ebs-efs-storage-strategy/notes/first_principles.pdf)
+| Week | Topic | What This Proves | Key Link |
+| --- | --- | --- | --- |
+| 1 | [First Principles](week-01-first-principles-foundation/) | Can evaluate services on constraints, not habit | [Service audit](week-01-first-principles-foundation/docs/aws-services-audit.md) |
+| 2 | [VPC Networking](week-02-vpc-networking-security/) | Can design network boundaries with blast radius control | [Decision doc](week-02-vpc-networking-security/docs/vpc-architecture.md) |
+| 3 | [EC2 + ASG + ALB](week-03-ec2-asg-alb-high-availability/) | Can build HA that self-heals and explain the cost | [Runbook](week-03-ec2-asg-alb-high-availability/docs/alb-asg-runbook.md) |
+| 4 | [Storage Strategy](week-04-s3-ebs-efs-storage-strategy/) | Can pick the right storage tier and defend it with numbers | [Decision doc](week-04-s3-ebs-efs-storage-strategy/docs/DECISIONS.md) |
+| 5 | [Terraform IaC](week-05-terraform-fundamentals-modules/) | Can codify infrastructure, eliminate drift, deploy in one command | [Decision doc](week-05-terraform-fundamentals-modules/docs/DECISIONS.md) |
+| 6 | Containers (ECS/Fargate) | Can containerize a workload with proper networking and IAM | Planned |
+| 7 | Kubernetes (EKS) | Can deploy to EKS and explain when K8s is the wrong choice | Planned |
+| 8 | Security + Compliance | Can map infrastructure to NIST 800-53 and remediate findings | Planned |
+| 9 | DevSecOps Pipelines | Can build CI/CD with automated security scanning | Planned |
+| 10 | Production Architecture | Can design a 3-tier Terraform architecture with remote state | Planned |
+| 11 | Observability | Can instrument infrastructure for monitoring and SIEM | Planned |
+| 12 | Multi-Account | Can design AWS Organizations with SCPs and cross-account access | Planned |
 
-- **Week 3: High Availability Web Tier (EC2 + ASG + ALB)**
-  - LinkedIn article + video: [What Happens When an EC2 Instance Fails in Production? (ALB + Auto Scaling)](https://www.linkedin.com/pulse/what-happens-when-ec2-instance-fails-production-alb-auto-fresco-znj9e/)
-  - Runbook: [`week-03-ec2-asg-alb-high-availability/docs/alb-asg-runbook.md`](week-03-ec2-asg-alb-high-availability/docs/alb-asg-runbook.md)
-  - Diagram: [`week-03-ec2-asg-alb-high-availability/infra/asg-alb-architecture-diagram.png`](week-03-ec2-asg-alb-high-availability/infra/asg-alb-architecture-diagram.png)
-  - Userdata: [`week-03-ec2-asg-alb-high-availability/scripts/userdata.sh`](week-03-ec2-asg-alb-high-availability/scripts/userdata.sh)
+---
 
-- **Week 2: Production VPC Build (Networking + Security Boundaries)**
-  - LinkedIn article + video: [How Network Boundaries Actually Work in AWS (VPC, Routing, and NAT)](https://www.linkedin.com/pulse/i-built-production-grade-vpc-from-scratch-heres-what-learned-fresco-gmome/)
-  - Notes: [`week-02-vpc-networking-security/vpc-architecture.md`](week-02-vpc-networking-security/vpc-architecture.md)
-  - Diagram: [`week-02-vpc-networking-security/vpc-architecture-diagram.png`](week-02-vpc-networking-security/vpc-architecture-diagram.png)
+## LinkedIn Articles
 
-- **Week 1: First Principles (Service Selection + Trade-offs)**
-  - Audit notes: [`week-01-first-principles-foundation/aws-services-audit.md`](week-01-first-principles-foundation/aws-services-audit.md)
+- **Week 5:** [Terraform Deployed My Entire AWS Architecture Under 5 Minutes](https://www.linkedin.com/pulse/terraform-deployed-my-entire-aws-architecture-under-5-fresco-glife/)
+- **Week 4:** [AWS Storage: How Access Patterns, Benchmarks, and Cost Should Drive Every Decision](https://www.linkedin.com/pulse/aws-storage-options-first-principles-guide-sebasti%C3%A3o-fresco-jrose/)
+- **Week 3:** [What Happens When an EC2 Instance Fails in Production?](https://www.linkedin.com/pulse/what-happens-when-ec2-instance-fails-production-alb-auto-fresco-znj9e/)
+- **Week 2:** [How Network Boundaries Actually Work in AWS](https://www.linkedin.com/pulse/i-built-production-grade-vpc-from-scratch-heres-what-learned-fresco-gmome/)
 
 ---
 
 ## Progress
 
-- [x] Week 1: First Principles Foundation  
-- [x] Week 2: VPC Networking + Security  
-- [x] Week 3: EC2 + Auto Scaling + ALB  
-- [x] Week 4: Storage Strategy (S3 / EBS / EFS)  
+- [x] Week 1: First Principles Foundation
+- [x] Week 2: VPC Networking + Security
+- [x] Week 3: EC2 + Auto Scaling + ALB
+- [x] Week 4: Storage Strategy (S3 / EBS / EFS)
 - [x] Week 5: Terraform Fundamentals + Modules
-- [ ] Week 6: CI/CD (CodePipeline Automation)  
-- [ ] Week 7: IAM Policies + Roles + Audit  
-- [ ] Week 8: VPC Hardening + Encryption + Compliance  
-- [ ] Week 9: Terraform 3-Tier Production Architecture  
-- [ ] Week 10: Cost Optimization + Well-Architected Review  
-- [ ] Week 11: Serverless API (Lambda + DynamoDB)  
-- [ ] Week 12: AWS Organizations + Multi-Account Portfolio
+- [ ] Week 6: Containers (ECS / Fargate)
+- [ ] Week 7: Kubernetes (EKS)
+- [ ] Week 8: Security + Compliance (NIST / CIS)
+- [ ] Week 9: DevSecOps Pipelines
+- [ ] Week 10: Terraform 3-Tier Production
+- [ ] Week 11: Observability (CloudWatch / Splunk)
+- [ ] Week 12: Multi-Account + Capstone
 
 ---
 
-## How This Repo Is Organized
-
-Each week is its own deliverable:
-
-- `docs/` → runbooks, notes, decision docs  
-- `infra/` → diagrams and architecture artifacts  
-- `scripts/` → automation helpers (ex: userdata)
-
----
-
-## About Me
-
-**Sebastião Fresco**  
-Infrastructure Engineer
-
-**Certifications**
-- AWS Certified Solutions Architect – Associate  
-- CompTIA Cloud+  
-- CompTIA Security+  
-- ITIL Foundation
-
----
-
-## Why I’m Doing This
-
-I’m building a portfolio that’s reviewable:
-what I built, how it works, and why I made the decisions I made.
+Each week: `docs/` (decision docs, runbooks), `infra/` (diagrams, Terraform), `scripts/` (automation).
