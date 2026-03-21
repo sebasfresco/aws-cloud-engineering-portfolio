@@ -1,7 +1,6 @@
 # AWS Cloud Engineering Portfolio
 
-**Sebastiao Fresco** | Infrastructure Engineer
-AWS Solutions Architect Associate | CompTIA Cloud+ | CompTIA Security+ | ITIL Foundation
+**Sebastiao Fresco** | Infrastructure Engineer | AWS Solutions Architect Associate | CompTIA Cloud+ | CompTIA Security+ | ITIL Foundation
 
 Every project includes a decision document: what I built, what I considered instead, why I chose this, what breaks if you change it, what it costs.
 
