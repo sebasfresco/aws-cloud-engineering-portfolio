@@ -1,2 +1,0 @@
-- [feedback_no_yapping.md](feedback_no_yapping.md) - User wants terse responses, no trailing summaries
-- [feedback_no_em_dashes.md](feedback_no_em_dashes.md) - User does not want em dashes in written content
