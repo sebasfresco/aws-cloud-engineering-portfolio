@@ -1,0 +1,32 @@
+# Docker Compose file for Week 6 multi-container lab
+# Defines two services: the Flask app and Redis
+# Docker Compose automatically creates a shared network for all services
+
+services:
+  # --- Flask Application ---
+  flask-app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5000"        # Map host port 5000 to container port 5000
+    environment:
+      - APP_ENV=development
+      - REDIS_HOST=redis   # This name matches the service name below
+      - REDIS_PORT=6379
+    depends_on:
+      - redis              # Start Redis before the Flask app
+    restart: unless-stopped # Restart if the container crashes
+
+  # --- Redis Cache ---
+  redis:
+    image: redis:7-alpine  # Official Redis image, Alpine variant (small)
+    ports:
+      - "6379:6379"        # Expose Redis port (for debugging only, remove in prod)
+    volumes:
+      - redis-data:/data   # Persist Redis data across container restarts
+    restart: unless-stopped
+
+# Named volume for Redis persistence
+volumes:
+  redis-data:
