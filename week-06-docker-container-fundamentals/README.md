@@ -43,13 +43,10 @@ See [docs/DOCKERFILE-BEST-PRACTICES.md](docs/DOCKERFILE-BEST-PRACTICES.md)
 ## Quick Start
 
 ### Run locally
-
 docker compose up -d --build
-
 # Visit <http://localhost:5001>
 
 ### Push to ECR
-
 cd infra && terraform apply
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
 docker build -t flask-app:v3.0.0 app/
