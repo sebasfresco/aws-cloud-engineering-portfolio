@@ -1,5 +1,19 @@
 # Dockerfile Best Practices
 
+## Quick Reference Checklist
+
+- [ ] Base image is pinned to a specific version (not "latest")
+- [ ] Base image is slim/minimal (not full OS unless required)
+- [ ] .dockerignore excludes .git, __pycache__, .terraform, .env
+- [ ] COPY dependency files before COPY application code (cache optimization)
+- [ ] RUN commands consolidated where possible (fewer layers)
+- [ ] Multi-stage build separates build from runtime
+- [ ] Container runs as non-root user (USER instruction)
+- [ ] HEALTHCHECK defined
+- [ ] No secrets in the image (use environment variables or secrets managers)
+- [ ] EXPOSE documents the listening port
+- [ ] CMD uses exec form (JSON array)
+
 ## 1. Order Layers for Cache Efficiency
 
 Put instructions that change infrequently FIRST (dependency installs) and instructions that change frequently LAST (code copy). Every line after a cache-busting change re-executes.
