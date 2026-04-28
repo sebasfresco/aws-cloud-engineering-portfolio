@@ -4,6 +4,10 @@
 > push to ECR with Terraform-managed infrastructure, and orchestrate
 > multi-container applications.
 
+## Quick demo (video)
+
+LinkedIn article + video: [My Docker image was 900 MB. Here is how I cut it to 130 MB.](https://www.linkedin.com/pulse/my-docker-image-900-mb-here-how-i-cut-130-why-dow-cares-fresco-f499e/)
+
 ## What I Built
 
 | Category | Resource | Details |
@@ -43,10 +47,13 @@ See [docs/DOCKERFILE-BEST-PRACTICES.md](docs/DOCKERFILE-BEST-PRACTICES.md)
 ## Quick Start
 
 ### Run locally
+
 docker compose up -d --build
+
 # Visit <http://localhost:5001>
 
 ### Push to ECR
+
 cd infra && terraform apply
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
 docker build -t flask-app:v3.0.0 app/
