@@ -4,6 +4,12 @@
 
 Weeks 2-3 proved I could build a VPC and a high-availability web tier by hand. This week I rebuilt the same architecture -- ALB, Auto Scaling Group, CloudWatch alarms -- entirely in Terraform with reusable modules and separate dev/prod environments. One `terraform apply` creates everything. One `terraform destroy` tears it all down.
 
+## Quick demo (video)
+
+LinkedIn article + video: [Terraform deployed my entire AWS architecture in under 5 minutes. Here is why I stopped clicking the Console.](https://www.linkedin.com/pulse/terraform-deployed-my-entire-aws-architecture-under-5-fresco-glife/)
+
+---
+
 **ALB → Target Group → ASG (2 AZs) + CloudWatch alarm → SNS**
 
 ![Week 5 Architecture](./infra/week5-architecture.png)
