@@ -177,7 +177,7 @@ resource "aws_launch_template" "web" {
     TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" \
       -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
     INSTANCE_ID=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" \
-    http://169.254.269.254/latest/meta-data/instance-id)
+    http://169.254.169.254/latest/meta-data/instance-id)
     echo "<h1>Terraform Week 5</h1><p>Instance: $INSTANCE_ID</p>" > /var/www/html/index.html
     systemctl start httpd
     systemctl enable httpd
