@@ -41,7 +41,7 @@ Every project includes a decision document: what I built, what I considered inst
 - [x] Week 3: EC2 + Auto Scaling + ALB
 - [x] Week 4: Storage Strategy (S3 / EBS / EFS)
 - [x] Week 5: Terraform Fundamentals + Modules
-- [ ] Week 6: Docker + Container Fundamentals
+- [x] Week 6: Docker + Container Fundamentals
 - [ ] Week 7: EKS / Kubernetes Core
 - [ ] Week 8: Security Services + Compliance
 - [ ] Week 9: CI/CD the DoW Way + Security Scanning
