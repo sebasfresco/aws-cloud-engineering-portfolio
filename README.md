@@ -15,7 +15,7 @@ Every project includes a decision document: what I built, what I considered inst
 | 3 | [EC2 + ASG + ALB](week-03-ec2-asg-alb-high-availability/) | Can build HA that self-heals and explain the cost | [Runbook](week-03-ec2-asg-alb-high-availability/docs/alb-asg-runbook.md) |
 | 4 | [Storage Strategy](week-04-s3-ebs-efs-storage-strategy/) | Can pick the right storage tier and defend it with numbers | [Decision doc](week-04-s3-ebs-efs-storage-strategy/docs/DECISIONS.md) |
 | 5 | [Terraform IaC](week-05-terraform-fundamentals-modules/) | Can codify infrastructure, eliminate drift, deploy in one command | [Decision doc](week-05-terraform-fundamentals-modules/docs/DECISIONS.md) |
-| 6 | [Docker + Containers](week-06-docker-container-fundamentals/) | Can containerize a workload with multi-stage builds and image hardening | Planned |
+| 6 | [Docker + Containers](week-06-docker-container-fundamentals/) | Can containerize a workload with multi-stage builds and image hardening | [Decision doc](week-06-docker-container-fundamentals/docs/DECISIONS.md) |
 | 7 | [EKS / Kubernetes](week-07-eks-kubernetes-core/) | Can deploy to EKS aligned with DoW DSOP and Platform One mandates | Planned |
 | 8 | [Security + Compliance](week-08-security-services-compliance/) | Can implement the detective control quad and document for ATO | Planned |
 | 9 | [CI/CD the DoW Way](week-09-cicd-dow-way-security-scanning/) | Can build CI/CD with automated security scanning and policy gates | Planned |
@@ -27,6 +27,7 @@ Every project includes a decision document: what I built, what I considered inst
 
 ## LinkedIn Articles
 
+- **Week 6:** [My Docker image was 900 MB. Here is how I cut it to 130 MB.](https://www.linkedin.com/pulse/my-docker-image-900-mb-here-how-i-cut-130-why-dow-cares-fresco-f499e/)
 - **Week 5:** [Terraform Deployed My Entire AWS Architecture Under 5 Minutes](https://www.linkedin.com/pulse/terraform-deployed-my-entire-aws-architecture-under-5-fresco-glife/)
 - **Week 4:** [AWS Storage: How Access Patterns, Benchmarks, and Cost Should Drive Every Decision](https://www.linkedin.com/pulse/aws-storage-options-first-principles-guide-sebasti%C3%A3o-fresco-jrose/)
 - **Week 3:** [What Happens When an EC2 Instance Fails in Production?](https://www.linkedin.com/pulse/what-happens-when-ec2-instance-fails-production-alb-auto-fresco-znj9e/)
