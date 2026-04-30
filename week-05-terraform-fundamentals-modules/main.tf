@@ -38,47 +38,59 @@ module "vpc" {
   private_subnet_cidrs = var.private_subnet_cidrs
 }
 
-module "alb_sg" {
-  source = "./modules/security_group"
-
-  name        = "${var.project_name}-alb"
+# ALB security group: HTTP from the internet.
+resource "aws_security_group" "alb" {
+  name        = "${var.project_name}-alb-sg"
   description = "ALB security group - HTTP from internet"
   vpc_id      = module.vpc.vpc_id
 
-  ingress_rules = [
-    {
-      description = "HTTP from anywhere"
-      from_port   = var.app_port
-      to_port     = var.app_port
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-  ]
+  ingress {
+    description = "HTTP from anywhere"
+    from_port   = var.app_port
+    to_port     = var.app_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.project_name}-alb-sg"
+  }
 }
 
-module "web_sg" {
-  source = "./modules/security_group"
-
-  name        = "${var.project_name}-web"
-  description = "Web instance security group"
+# Web instance SG: only accepts traffic from the ALB. Direct hits from the
+# internet to instance public IPs are blocked at the SG level. SSH is
+# intentionally absent — user_data does the setup; use SSM Session Manager
+# if you need ops access.
+resource "aws_security_group" "web" {
+  name        = "${var.project_name}-web-sg"
+  description = "Web instance SG - traffic only from ALB"
   vpc_id      = module.vpc.vpc_id
 
-  ingress_rules = [
-    {
-      description = "HTTP from anywhere"
-      from_port   = var.app_port
-      to_port     = var.app_port
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    },
-    {
-      description = "SSH from anywhere"
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-  ]
+  ingress {
+    description     = "HTTP from ALB"
+    from_port       = var.app_port
+    to_port         = var.app_port
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.project_name}-web-sg"
+  }
 }
 
 # ------------------------------------------------------------------
@@ -111,7 +123,7 @@ resource "aws_lb" "web" {
   name               = "${var.project_name}-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [module.alb_sg.security_group_id]
+  security_groups    = [aws_security_group.alb.id]
   subnets            = module.vpc.public_subnet_ids
 
   tags = {
@@ -168,7 +180,7 @@ resource "aws_launch_template" "web" {
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = var.instance_type
 
-  vpc_security_group_ids = [module.web_sg.security_group_id]
+  vpc_security_group_ids = [aws_security_group.web.id]
 
   user_data = base64encode(<<-EOF
     #!/bin/bash
@@ -248,9 +260,6 @@ resource "aws_autoscaling_policy" "cpu_target" {
   }
 }
 
-# ------------------------------------------------------------------
-# CloudWatch alarm
-# ------------------------------------------------------------------
 # ------------------------------------------------------------------
 # SNS Topic
 # Decouples alert delivery from alarm definition. Subscribers (email, Slack,
