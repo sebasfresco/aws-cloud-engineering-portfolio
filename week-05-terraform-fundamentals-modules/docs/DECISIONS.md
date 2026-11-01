@@ -19,7 +19,7 @@ The goal this week: describe the Week 3 web tier in Terraform, run a dev and a p
 **Decision:** `envs/dev` and `envs/prod` are separate root configurations. Each has its own state file. The shared logic lives in the modules.
 
 **Alternatives considered:**
-- **One root and two tfvars files** (what I had first). Both environments shared one state file, so `terraform apply -var-file=prod.tfvars` did not create prod next to dev. It planned to change the dev resources into prod ones. That was my first layout, and the README wrongly said both could coexist.
+- **One root and two tfvars files** (what I had first). Both environments shared one state file, so `terraform apply -var-file=prod.tfvars` did not create prod next to dev. Its plan changed the dev resources into prod ones. That was my first layout, and the README wrongly said both could coexist.
 - **CLI workspaces** (`terraform workspace new prod`). Each workspace gets its own state, so this fixes the bug above. But all workspaces in a directory share one backend, so they share the same bucket and the same credentials. The environment you are about to change is hidden state (whichever workspace is selected), not something visible in the path or in a pull request.
 
 **Why:** HashiCorp's own workspace docs say CLI workspaces use the same backend and are "not a suitable isolation mechanism" when you want strong separation between stages like dev and prod. They recommend a reusable module plus a separate configuration per deployment, which is this layout. With directories, the environment is the folder I am standing in. Prod can later move to its own bucket, or its own account, by changing one backend block.
