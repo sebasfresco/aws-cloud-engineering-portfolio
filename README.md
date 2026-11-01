@@ -1,6 +1,6 @@
 # AWS Cloud Engineering Portfolio
 
-**Sebastiao Fresco** | Infrastructure Engineer | AWS Solutions Architect Associate | CompTIA Cloud+ | CompTIA Security+ | ITIL Foundation
+**Sebastiao Fresco** | DevOps Engineer | AWS Solutions Architect Associate | AWS CloudOps Engineer Associate | CompTIA Cloud+ | CompTIA Security+ | ITIL Foundation
 
 Weeks 2, 4, 5 and 6 each have a decision document: what I built, what I considered instead, why I chose it, and what it costs. Week 1 is a service audit and Week 3 is a runbook with failure tests.
 
