@@ -17,7 +17,7 @@ Weeks 2, 4, 5 and 6 each have a decision document: what I built, what I consider
 | 3 | [EC2 + ASG + ALB](week-03-ec2-asg-alb-high-availability/) | Can build HA that self-heals and explain the cost | [Runbook](week-03-ec2-asg-alb-high-availability/docs/alb-asg-runbook.md) |
 | 4 | [Storage Strategy](week-04-s3-ebs-efs-storage-strategy/) | Can pick the right storage tier and defend it with numbers | [Decision doc](week-04-s3-ebs-efs-storage-strategy/docs/DECISIONS.md) |
 | 5 | [Terraform IaC](week-05-terraform-fundamentals-modules/) | Can codify infrastructure, keep dev and prod in separate state, deploy each in one command | [Decision doc](week-05-terraform-fundamentals-modules/docs/DECISIONS.md) |
-| 6 | [Docker + Containers](week-06-docker-container-fundamentals/) | Can containerize a workload with multi-stage builds and image hardening | [Decision doc](week-06-docker-container-fundamentals/docs/DECISIONS.md) |
+| 6 | [Docker + Containers](week-06-docker-container-fundamentals/) | Can containerize a workload, shrink it with a slim base image, and harden it | [Decision doc](week-06-docker-container-fundamentals/docs/DECISIONS.md) |
 
 ---
 

@@ -1,6 +1,6 @@
-# Week 6 — Docker + Container Fundamentals
+# Week 6: Docker + Container Fundamentals
 
-> **What this proves:** Can containerize a workload with multi-stage builds,
+> **What this proves:** Can containerize a workload on a slim base image,
 > push to ECR with Terraform-managed infrastructure, and orchestrate
 > multi-container applications.
 
