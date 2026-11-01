@@ -1,4 +1,4 @@
-# Week 5 — Terraform Fundamentals + Modules (Autoscaling Web Tier)
+# Week 5: Terraform Fundamentals + Modules (Autoscaling Web Tier)
 
 > **What this proves:** Can codify a multi-AZ web tier in Terraform with modules, keep dev and prod in separate state, and deploy or destroy each one with one command.
 
@@ -65,7 +65,7 @@ LinkedIn article + video: [Terraform deployed my entire AWS architecture in unde
 | [Terraform](https://developer.hashicorp.com/terraform/install) | >= 1.5.0 |
 | [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) | v2+ |
 | AWS credentials configured | `aws configure` or env vars |
-| AWS account with EC2/VPC/ELB permissions | — |
+| AWS account with EC2/VPC/ELB permissions | Any |
 
 ---
 
@@ -148,7 +148,7 @@ After `terraform apply`, the following values are available:
 | Output | Description |
 | --- | --- |
 | `vpc_id` | ID of the created VPC |
-| `alb_dns_name` | ALB DNS name — visit `http://<this>` to test |
+| `alb_dns_name` | ALB DNS name; visit `http://<this>` to test |
 | `asg_name` | Auto Scaling Group name |
 
 ---
@@ -184,9 +184,9 @@ After `terraform apply`, the following values are available:
 
 Changes needed before running real workloads:
 
-- **NAT Gateway** — lets private-subnet instances reach the internet for package updates without being publicly exposed (~$32/month).
-- **HTTPS (ACM + ALB listener rule)** — encrypts traffic in transit; required for any user-facing service. Terminate TLS at the ALB with a free ACM certificate.
-- **Private subnets for instances** — move ASG instances out of public subnets so they have no public IPs. All traffic should flow exclusively through the ALB.
-- **Remote state (S3 with native locking)** — local `.tfstate` files cannot be shared or locked. Teams need a shared backend with state locking to prevent concurrent writes. The S3 backend now locks with `use_lockfile = true`; DynamoDB-based locking is deprecated. Each env's `main.tf` has a commented example with a separate key per environment.
-- **WAF** — attach AWS WAF to the ALB to protect against OWASP top 10 attacks (SQLi, XSS, bot traffic).
-- **Ops access** — no SSH is configured. For shell access in production, use SSM Session Manager (no SSH port required) or add a bastion host in a public subnet.
+- **NAT Gateway**: lets private-subnet instances reach the internet for package updates without being publicly exposed (~$32/month).
+- **HTTPS (ACM + ALB listener rule)**: encrypts traffic in transit; required for any user-facing service. Terminate TLS at the ALB with a free ACM certificate.
+- **Private subnets for instances**: move ASG instances out of public subnets so they have no public IPs. All traffic should flow exclusively through the ALB.
+- **Remote state (S3 with native locking)**: local `.tfstate` files cannot be shared or locked. Teams need a shared backend with state locking to prevent concurrent writes. The S3 backend now locks with `use_lockfile = true`; DynamoDB-based locking is deprecated. Each env's `main.tf` has a commented example with a separate key per environment.
+- **WAF**: attach AWS WAF to the ALB to protect against OWASP top 10 attacks (SQLi, XSS, bot traffic).
+- **Ops access**: no SSH is configured. For shell access in production, use SSM Session Manager (no SSH port required) or add a bastion host in a public subnet.
