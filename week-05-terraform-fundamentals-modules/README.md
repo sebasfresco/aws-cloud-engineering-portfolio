@@ -30,7 +30,7 @@ LinkedIn article + video: [Terraform deployed my entire AWS architecture in unde
 | --- | --- | --- |
 | Networking | VPC | 2 public + 2 private subnets across multiple AZs |
 | Networking | Internet Gateway | Public route table with 0.0.0.0/0 route |
-| Compute | Launch Template | Amazon Linux 2023, Apache httpd via user data |
+| Compute | Launch Template | Amazon Linux 2023, Apache httpd via user data, IMDSv2 required |
 | Compute | Auto Scaling Group | Min/max/desired configurable per environment |
 | Compute | Scaling Policy | Target tracking at 60% average CPU |
 | Load Balancing | Application Load Balancer | HTTP listener on port 80 |
@@ -38,7 +38,7 @@ LinkedIn article + video: [Terraform deployed my entire AWS architecture in unde
 | Security | ALB security group | HTTP inbound from anywhere |
 | Security | Web instance security group | HTTP inbound from ALB only (no SSH) |
 | Monitoring | CloudWatch alarm | CPU > 80% sustained for 10 min |
-| Monitoring | SNS topic | Alert notifications |
+| Monitoring | SNS topic | Alert notifications, optional email subscription |
 
 ### Module responsibilities
 
@@ -90,7 +90,7 @@ curl http://$(terraform output -raw alb_dns_name)
 terraform destroy
 ```
 
-Prod works the same way from `envs/prod`. The environment values are in each `main.tf`, so there are no tfvars files to create.
+Prod works the same way from `envs/prod`. The environment values are in each `main.tf`, so there are no tfvars files to create. To get alarm emails, copy `terraform.tfvars.example` to `terraform.tfvars` and set your address, then confirm the subscription email AWS sends. `*.tfvars` is gitignored; only the `.example` files are committed.
 
 ---
 
@@ -101,7 +101,8 @@ week-05-terraform-fundamentals-modules/
 ├── envs/
 │   ├── dev/
 │   │   ├── main.tf                  # Backend, provider, dev values for both modules
-│   │   ├── variables.tf             # Region
+│   │   ├── variables.tf             # Region, optional alert email
+│   │   ├── terraform.tfvars.example # Alert email template
 │   │   ├── outputs.tf               # VPC ID, ALB DNS name, ASG name
 │   │   └── .terraform.lock.hcl      # Provider versions, committed
 │   └── prod/                        # Same files, prod values, separate state

@@ -50,3 +50,9 @@ variable "alarm_cpu_threshold" {
   type        = number
   default     = 80
 }
+
+variable "alert_email" {
+  description = "Email address subscribed to the alarm topic. null means no subscription."
+  type        = string
+  default     = null
+}

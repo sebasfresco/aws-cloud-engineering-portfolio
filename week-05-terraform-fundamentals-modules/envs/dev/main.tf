@@ -58,4 +58,5 @@ module "web_tier" {
   asg_min           = 1
   asg_max           = 2
   asg_desired       = 1
+  alert_email       = var.alert_email
 }

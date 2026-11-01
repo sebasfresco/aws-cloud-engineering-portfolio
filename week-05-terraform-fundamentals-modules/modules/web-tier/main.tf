@@ -151,6 +151,14 @@ resource "aws_launch_template" "web" {
 
   vpc_security_group_ids = [aws_security_group.web.id]
 
+  # Require IMDSv2 (session tokens). The user data below already uses a
+  # token, so this only blocks the older, token-less IMDSv1 calls.
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 1
+  }
+
   user_data = base64encode(<<-EOF
     #!/bin/bash
     yum update -y
@@ -183,9 +191,17 @@ resource "aws_launch_template" "web" {
 # not just if the VM is running. An instance with crashed httpd
 # gets replaced. health_check_grace_period gives instances 5 min
 # to boot before checking starts.
+#
+# name_prefix, not name: with create_before_destroy, a replacement ASG
+# is created before the old one is deleted, and two ASGs cannot share a
+# fixed name.
+#
+# version = "$Latest" means new instances use the newest launch template
+# version, but running instances are not replaced when it changes. To
+# roll them, start an instance refresh (or terminate them one at a time).
 # ------------------------------------------------------------------
 resource "aws_autoscaling_group" "web" {
-  name                      = "${var.project_name}-asg"
+  name_prefix               = "${var.project_name}-asg-"
   desired_capacity          = var.asg_desired
   max_size                  = var.asg_max
   min_size                  = var.asg_min
@@ -236,6 +252,16 @@ resource "aws_autoscaling_policy" "cpu_target" {
 # ------------------------------------------------------------------
 resource "aws_sns_topic" "alerts" {
   name = "${var.project_name}-alerts"
+}
+
+# Without a subscriber the alarm fires into an empty topic. The address
+# is optional so the stack still applies without one. AWS emails a
+# confirmation link, and nothing is delivered until it is clicked.
+resource "aws_sns_topic_subscription" "email" {
+  count     = var.alert_email == null ? 0 : 1
+  topic_arn = aws_sns_topic.alerts.arn
+  protocol  = "email"
+  endpoint  = var.alert_email
 }
 
 # Notification layer separate from auto-scaling. Scaling policy
