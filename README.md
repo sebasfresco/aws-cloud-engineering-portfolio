@@ -2,7 +2,9 @@
 
 **Sebastiao Fresco** | Infrastructure Engineer | AWS Solutions Architect Associate | CompTIA Cloud+ | CompTIA Security+ | ITIL Foundation
 
-Every project includes a decision document: what I built, what I considered instead, why I chose this, what breaks if you change it, what it costs.
+Weeks 2, 4, 5 and 6 each have a decision document: what I built, what I considered instead, why I chose it, and what it costs. Week 1 is a service audit and Week 3 is a runbook with failure tests.
+
+**Status: finished.** The program was scoped for 12 weeks. I chose to end it after Week 6. Next are the CKA and the AWS Certified Solutions Architect - Professional.
 
 ---
 
@@ -14,14 +16,8 @@ Every project includes a decision document: what I built, what I considered inst
 | 2 | [VPC Networking](week-02-vpc-networking-security/) | Can design network boundaries with blast radius control | [Decision doc](week-02-vpc-networking-security/docs/vpc-architecture.md) |
 | 3 | [EC2 + ASG + ALB](week-03-ec2-asg-alb-high-availability/) | Can build HA that self-heals and explain the cost | [Runbook](week-03-ec2-asg-alb-high-availability/docs/alb-asg-runbook.md) |
 | 4 | [Storage Strategy](week-04-s3-ebs-efs-storage-strategy/) | Can pick the right storage tier and defend it with numbers | [Decision doc](week-04-s3-ebs-efs-storage-strategy/docs/DECISIONS.md) |
-| 5 | [Terraform IaC](week-05-terraform-fundamentals-modules/) | Can codify infrastructure, eliminate drift, deploy in one command | [Decision doc](week-05-terraform-fundamentals-modules/docs/DECISIONS.md) |
+| 5 | [Terraform IaC](week-05-terraform-fundamentals-modules/) | Can codify infrastructure, keep dev and prod in separate state, deploy each in one command | [Decision doc](week-05-terraform-fundamentals-modules/docs/DECISIONS.md) |
 | 6 | [Docker + Containers](week-06-docker-container-fundamentals/) | Can containerize a workload with multi-stage builds and image hardening | [Decision doc](week-06-docker-container-fundamentals/docs/DECISIONS.md) |
-| 7 | [EKS / Kubernetes](week-07-eks-kubernetes-core/) | Can deploy to EKS aligned with DoW DSOP and Platform One mandates | Planned |
-| 8 | [Security + Compliance](week-08-security-services-compliance/) | Can implement the detective control quad and document for ATO | Planned |
-| 9 | [CI/CD the DoW Way](week-09-cicd-dow-way-security-scanning/) | Can build CI/CD with automated security scanning and policy gates | Planned |
-| 10 | [Production EKS 3-Tier](week-10-production-eks-3tier-architecture/) | Can design a production-grade 3-tier architecture on EKS | Planned |
-| 11 | [Splunk + Observability + Ansible](week-11-splunk-observability-ansible/) | Can instrument monitoring, integrate SIEM, and automate STIG hardening | Planned |
-| 12 | [Portfolio Polish](week-12-portfolio-polish-application-blitz/) | Can present cloud engineering work as a cohesive portfolio | Planned |
 
 ---
 
@@ -35,21 +31,19 @@ Every project includes a decision document: what I built, what I considered inst
 
 ---
 
-## Progress
-
-- [x] Week 1: First Principles Foundation
-- [x] Week 2: VPC Networking + Security
-- [x] Week 3: EC2 + Auto Scaling + ALB
-- [x] Week 4: Storage Strategy (S3 / EBS / EFS)
-- [x] Week 5: Terraform Fundamentals + Modules
-- [x] Week 6: Docker + Container Fundamentals
-- [ ] Week 7: EKS / Kubernetes Core
-- [ ] Week 8: Security Services + Compliance
-- [ ] Week 9: CI/CD the DoW Way + Security Scanning
-- [ ] Week 10: Production EKS 3-Tier Architecture
-- [ ] Week 11: Splunk + Observability + Ansible
-- [ ] Week 12: Portfolio Polish + Application Blitz
+Each week has a README and `docs/` (decision docs, runbooks). Most have `infra/` (diagrams) and `notes/` (handwritten scans). Terraform is in Week 5 and in Week 6 `infra/`.
 
 ---
 
-Each week: `docs/` (decision docs, runbooks), `infra/` (diagrams, Terraform), `scripts/` (automation).
+## What I'd do differently
+
+Errors and gaps I know about and did not fix in place:
+
+- Weeks 1-4 were built in the Console, so they cannot be rerun from code. Building them in Terraform would fix that.
+- Week 3 does not record whether the instances had public IPs, so its IPv4 cost is a range.
+- Week 4 `decision_matrix.png` still shows the January 2026 figures. The [markdown matrix](week-04-s3-ebs-efs-storage-strategy/docs/storage-decision-matrix.md) has the corrections.
+- Week 4 gp3 benchmarks are above the gp3 baseline, so fio probably measured the page cache. They need a rerun with `--direct=1`.
+- Week 4 never sets the access-logs expiry against a defined AU-11 retention period.
+- Week 5 `envs/` layout passes `terraform validate` but has not been applied since I split dev and prod.
+- Week 6 ECR lifecycle policy only expires untagged images, so tagged versions pile up forever. It needs a rule that keeps the last N tags.
+- Week 6 scan-on-push is basic scanning, which skips the Python packages. Enhanced scanning would cover them.

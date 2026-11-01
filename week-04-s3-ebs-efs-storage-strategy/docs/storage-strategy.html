@@ -358,7 +358,7 @@
 
 <!-- PAGE 1 -->
 <div class="page">
-  <div class="cover-label">Fresco Enterprises &nbsp;·&nbsp; Confidential</div>
+  <div class="cover-label">Fresco Enterprises (fictional client)</div>
 
   <div class="cover-title">S3 Storage Strategy<br>Recommendation</div>
   <div class="cover-subtitle">Tiered architecture to reduce cost while maintaining compliance</div>
@@ -381,7 +381,7 @@
   <div class="section">
     <div class="section-label">Executive Summary</div>
     <div class="section-body">
-      Fresco Enterprises manages 10 TB of data with mixed access patterns, currently stored at a flat Standard tier regardless of access frequency. This document recommends a three-bucket tiered S3 architecture that reduces annual storage costs by approximately 25% while maintaining 99.99% availability for active data and satisfying 7-year retention requirements through Glacier Deep Archive with Object Lock.
+      Fresco Enterprises manages 10 TB of data with mixed access patterns, currently stored at a flat Standard tier regardless of access frequency. This document recommends a three-bucket tiered S3 architecture that reduces annual storage costs by approximately 26% while maintaining 99.99% availability for active data and satisfying 7-year retention requirements through Glacier Deep Archive with Object Lock.
     </div>
   </div>
 
@@ -444,7 +444,7 @@
   </div>
 
   <div class="footer">
-    <div class="footer-left">Fresco Enterprises · Storage Strategy Recommendation · Confidential</div>
+    <div class="footer-left">Fresco Enterprises · Storage Strategy Recommendation</div>
     <div class="footer-right">1 of 3</div>
   </div>
 </div>
@@ -477,8 +477,8 @@
       <div class="d-num">03</div>
       <div class="d-content">
         <div class="d-title">Encryption</div>
-        <div class="d-choice">SSE-KMS on all buckets</div>
-        <div class="d-rationale">Satisfies NIST 800-53 SC-28. Supports key rotation and provides a full audit trail via CloudTrail for every encryption and decryption event.</div>
+        <div class="d-choice">SSE-KMS + Bucket Keys on data buckets, SSE-S3 on access-logs</div>
+        <div class="d-rationale">Satisfies NIST 800-53 SC-28. SSE-KMS supports key rotation and a CloudTrail audit trail of key use; S3 Bucket Keys cut KMS request costs by up to 99%. The access-logs bucket uses SSE-S3 because S3 server access logging requires it.</div>
       </div>
     </div>
 
@@ -534,8 +534,8 @@
           <td style="text-align:right;">$30.73</td>
         </tr>
         <tr>
-          <td>KMS (~$1/key + $0.03/10K req)</td>
-          <td style="text-align:right;">~$5.00</td>
+          <td>KMS ($1/key + requests, with Bucket Keys)</td>
+          <td style="text-align:right;">~$1.10</td>
         </tr>
         <tr>
           <td>Requests (500K PUT / 2M GET)</td>
@@ -558,7 +558,7 @@
   <div class="cost-summary">
     <div class="cost-cell">
       <div class="cost-cell-label">Proposed · Monthly</div>
-      <div class="cost-cell-value">$177.64</div>
+      <div class="cost-cell-value">$173.74</div>
       <div class="cost-cell-sub">Tiered architecture</div>
     </div>
     <div class="cost-cell shaded">
@@ -568,13 +568,13 @@
     </div>
     <div class="cost-cell green">
       <div class="cost-cell-label">Annual Savings</div>
-      <div class="cost-cell-value">~$695</div>
-      <div class="cost-cell-sub">~25% reduction at 10 TB</div>
+      <div class="cost-cell-value">~$741</div>
+      <div class="cost-cell-sub">~26% reduction at 10 TB</div>
     </div>
   </div>
 
   <div class="footer">
-    <div class="footer-left">Fresco Enterprises · Storage Strategy Recommendation · Confidential</div>
+    <div class="footer-left">Fresco Enterprises · Storage Strategy Recommendation</div>
     <div class="footer-right">2 of 3</div>
   </div>
 </div>
@@ -595,17 +595,17 @@
       <tbody>
         <tr>
           <td>10 TB</td>
-          <td style="text-align:right;">~$695</td>
+          <td style="text-align:right;">~$741</td>
           <td class="td-muted">Current environment</td>
         </tr>
         <tr>
           <td>100 TB</td>
-          <td style="text-align:right;">~$7,000</td>
+          <td style="text-align:right;">~$7,400</td>
           <td class="td-muted">Small program growth</td>
         </tr>
         <tr>
           <td>1 PB</td>
-          <td style="text-align:right;">~$70,000</td>
+          <td style="text-align:right;">~$74,000</td>
           <td class="td-muted">Enterprise scale</td>
         </tr>
       </tbody>
@@ -619,7 +619,7 @@
 
     <div class="compliance-row">
       <div class="c-tag">NIST SC-28</div>
-      <div class="c-desc">Encryption at rest via SSE-KMS across all buckets</div>
+      <div class="c-desc">SSE-KMS on data buckets, SSE-S3 on access-logs</div>
     </div>
     <div class="compliance-row">
       <div class="c-tag">NIST AC-3</div>
@@ -627,7 +627,7 @@
     </div>
     <div class="compliance-row">
       <div class="c-tag">NIST SI-12</div>
-      <div class="c-desc">Versioning enabled to protect information integrity</div>
+      <div class="c-desc">Object Lock (Compliance mode) enforces 7-year retention on archive-data</div>
     </div>
     <div class="compliance-row">
       <div class="c-tag">NIST AU-2</div>
@@ -635,7 +635,7 @@
     </div>
     <div class="compliance-row">
       <div class="c-tag">NIST AU-11</div>
-      <div class="c-desc">Object Lock (Compliance mode) enforces 7-year retention</div>
+      <div class="c-desc">access-logs lifecycle keeps audit records for the defined retention period before expiry</div>
     </div>
   </div>
 
@@ -683,7 +683,7 @@
   </div>
 
   <div class="footer">
-    <div class="footer-left">Fresco Enterprises · Storage Strategy Recommendation · Confidential</div>
+    <div class="footer-left">Fresco Enterprises · Storage Strategy Recommendation</div>
     <div class="footer-right">3 of 3</div>
   </div>
 </div>

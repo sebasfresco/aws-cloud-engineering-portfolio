@@ -9,7 +9,7 @@ services:
       context: ./app
       dockerfile: Dockerfile
     ports:
-      - "5001:5000"        # Map host port 5000 to container port 5000
+      - "5001:5000"        # Map host port 5001 to container port 5000
     environment:
       - APP_ENV=development
       - REDIS_HOST=redis   # This name matches the service name below
@@ -22,7 +22,7 @@ services:
   redis:
     image: redis:7-alpine  # Official Redis image, Alpine variant (small)
     ports:
-      - "6379:6379"        # Expose Redis port (for debugging only, remove in prod)
+      - "127.0.0.1:6379:6379" # Debugging only: localhost, never all interfaces (no auth)
     volumes:
       - redis-data:/data   # Persist Redis data across container restarts
     restart: unless-stopped

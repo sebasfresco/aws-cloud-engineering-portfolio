@@ -1,6 +1,8 @@
 # Week 2 -- VPC Networking + Security
 
-> **What this proves:** Can design a production VPC with intentional segmentation, explicit routing, and layered security, and explain the cost of each choice.
+> **What this proves:** Can design a VPC with intentional segmentation, explicit routing, and layered security, and explain the cost of each choice.
+>
+> This is a single-AZ learning build: one public and one private subnet. A production VPC repeats both subnets in at least two Availability Zones.
 
 Not "launch a VPC and move on."
 I wanted to understand the design choices behind a production-style network, what each component is responsible for, and what actually breaks when something is missing.
@@ -18,7 +20,7 @@ https://www.linkedin.com/pulse/i-built-production-grade-vpc-from-scratch-heres-w
 
 ## What I built
 
-- VPC with a public subnet and a private subnet
+- VPC with a public subnet and a private subnet, in one Availability Zone
 - Internet Gateway for public subnet routing
 - NAT Gateway for private subnet outbound access
 - Separate route tables for public vs private tiers

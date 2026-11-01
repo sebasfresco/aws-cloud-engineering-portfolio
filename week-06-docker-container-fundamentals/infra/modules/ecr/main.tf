@@ -2,8 +2,9 @@ resource "aws_ecr_repository" "this" {
   name                 = var.repository_name
   image_tag_mutability = var.image_tag_mutability
 
-  # Enable image scanning on every push
-  # Checks for CVEs in OS packages and language-level dependencies
+  # Enable basic image scanning on every push
+  # Basic scanning checks OS packages only. Language packages (pip, npm)
+  # need enhanced scanning through Amazon Inspector, which costs extra.
   image_scanning_configuration {
     scan_on_push = var.scan_on_push
   }
@@ -18,8 +19,9 @@ resource "aws_ecr_repository" "this" {
 }
 
 # Lifecycle policy: automatically delete untagged images after N days
-# Untagged images accumulate when you push new versions of the same tag
-# Without this policy, ECR storage costs grow indefinitely
+# Untagged images come from untagged pushes or buildx attestation manifests
+# (the repo is IMMUTABLE, so a tag can never be overwritten)
+# Tagged images are not expired by this rule
 resource "aws_ecr_lifecycle_policy" "this" {
   repository = aws_ecr_repository.this.name
 

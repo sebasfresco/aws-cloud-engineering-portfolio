@@ -13,8 +13,8 @@ LinkedIn article + video: [My Docker image was 900 MB. Here is how I cut it to 1
 | Category | Resource | Details |
 |----------|----------|---------|
 | Application | Flask web app | Python 3.12, health check endpoint, Redis integration |
-| Container | Multi-stage Dockerfile | Builder + production stages, non-root user, HEALTHCHECK |
-| Registry | ECR repository | Terraform-managed, scan-on-push, lifecycle policy |
+| Container | Multi-stage Dockerfile | Builder + production stages, gunicorn, numeric non-root user, HEALTHCHECK |
+| Registry | ECR repository | Terraform-managed, basic scan-on-push (OS packages), lifecycle policy |
 | Networking | Docker Compose | Flask + Redis on custom bridge network |
 | IaC | Terraform ECR Module | Reusable module with scanning, encryption, lifecycle |
 
@@ -42,23 +42,29 @@ See [docs/DOCKERFILE-BEST-PRACTICES.md](docs/DOCKERFILE-BEST-PRACTICES.md)
 | Docker Desktop | Latest |
 | Terraform | >= 1.5.0 |
 | AWS CLI v2 | Configured |
-| Python | 3.12 (insider container only) |
+| Python | 3.12 (inside the container only) |
 
 ## Quick Start
 
 ### Run locally
 
+```bash
 docker compose up -d --build
-
-# Visit <http://localhost:5001>
+# Visit http://localhost:5001
+```
 
 ### Push to ECR
 
-cd infra && terraform apply
+```bash
+cd infra && terraform init && terraform apply
+cd ..
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
 docker build -t flask-app:v3.0.0 app/
 docker tag flask-app:v3.0.0 <ecr-url>:v3.0.0
 docker push <ecr-url>:v3.0.0
+```
+
+The repository is immutable, so pushing `v3.0.0` a second time fails. Bump the tag for every build.
 
 ## Cost
 
@@ -70,5 +76,7 @@ docker push <ecr-url>:v3.0.0
 
 ## Tear Down
 
+```bash
 docker compose down -v
 cd infra && terraform destroy
+```

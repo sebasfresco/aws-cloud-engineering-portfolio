@@ -1,4 +1,4 @@
-# Containers (ECS / Fargate) -- Decision Document
+# Containers (Docker + ECR) -- Decision Document
 
 ## Why Containers Over VMs
 
@@ -18,7 +18,7 @@ A container packages the application, its dependencies, and its runtime in a sin
 | Resource overhead | Full OS per instance | Shared kernel, MB-level overhead |
 | Density | Dozens per host | Hundreds per host |
 | Isolation | Hardware-level (hypervisor) | Process-level (kernel namespaces) |
-| Portability | AMI is AWS-specific | Image runs anywhere Docker runs |
+| Portability | AMI is AWS-specific | Image runs anywhere Docker runs on the same CPU architecture (an image built on an Apple-silicon Mac is arm64 and will not run on x86 hosts unless built multi-platform) |
 | Security boundary | Stronger (separate kernels) | Weaker (shared kernel) |
 | Cost at scale | Higher (paying for idle OS overhead) | Lower (higher density per host) |
 
@@ -51,6 +51,8 @@ The base image is the foundation of every container. A bloated base image means:
 
 python:3.12-slim. It balances size with compatibility. Alpine is smaller but uses musl instead of glibc, which breaks some Python packages that depend on C extensions.
 
+The base image is what cut the size. Both stages of my Dockerfile use python:3.12-slim, so the multi-stage build saves almost nothing in this app. I rebuilt it as a single stage on the same base and it came out the same size. Multi-stage pays off when the builder needs compilers or headers that the runtime does not.
+
 ## ECR Configuration Decisions
 
 ### Image Tag Mutability: IMMUTABLE
@@ -59,17 +61,17 @@ Once pushed, a tag like v2.0.0 cannot be overwritten. This guarantees that "v2.0
 
 ### Scan on Push: Enabled
 
-Every pushed image is automatically scanned for CVEs. In a CI/CD pipeline, you would gate deployment on scan results (zero critical/high findings).
+Every pushed image is automatically scanned for CVEs. This is basic scanning, which covers operating system packages only. My Flask and Redis Python packages are not checked. Covering language packages needs enhanced scanning (Amazon Inspector), which costs extra. In a CI/CD pipeline, you would gate deployment on scan results (zero critical/high findings).
 
 ### Lifecycle Policy: 14-day Untagged Expiry
 
-When you push a new "v2.0.0" to an IMMUTABLE repo, the old image becomes untagged. Without cleanup, these accumulate and increase ECR storage costs ($0.10/GB-month). The lifecycle policy auto-deletes them after 14 days, providing a rollback window without unbounded cost growth.
+In an IMMUTABLE repo you cannot push a new "v2.0.0" over the old one. ECR rejects the push with `ImageTagAlreadyExistsException`. Untagged images still show up, for example from pushes without a tag or from the extra manifests that `docker buildx` attaches. Without cleanup, these accumulate and increase ECR storage costs ($0.10/GB-month). The lifecycle policy deletes them after 14 days. It does not touch tagged images, so every tagged version is kept until I delete it. Rollback means deploying an older tag, which is always still there.
 
 ### Cost
 
 ECR storage: $0.10/GB-month
 ECR data transfer: $0.09/GB (cross-region pulls)
-At out image size (~130MB), storing 10 tagged versions costs ~$0.13/month.
+At our image size (~130MB), storing 10 tagged versions costs ~$0.13/month.
 
 ## Container Networking Decisions
 
@@ -88,4 +90,4 @@ Docker Compose automatically creates a custom bridge network for each project. S
 
 ### ECS Equivalent
 
-In ECS, the equivalent of Docker Compose networking is the "awsvpc" network mode, where each task gets its own ENI and private IP in your VPC. Service discovery replaces Docker DNS. This is covered in Week 7.
+In ECS, the equivalent of Docker Compose networking is the "awsvpc" network mode, where each task gets its own ENI and private IP in your VPC. Service discovery replaces Docker DNS. I did not build an ECS service in this program.

@@ -17,7 +17,7 @@ Object storage for files, backups, and static content. Accessible over HTTP.
 - **S3 vs EFS:**  
   EFS is shared NFS storage for multiple EC2 instances. Great when you truly need concurrent mounts, but much more expensive.
 - **S3 vs Glacier:**  
-  Glacier is an S3 storage class. Cheap archival storage, slow retrieval.
+  Glacier is a family of S3 storage classes for archival data. Retrieval ranges from milliseconds (Glacier Instant Retrieval) to hours (Glacier Flexible Retrieval and Deep Archive).
 
 ### Why I chose it
 Default storage layer. Mature, cheap, and everything integrates with it.
@@ -63,7 +63,7 @@ Simple web server + database workload. Predictable demand, low complexity, easy 
 ---
 
 ## RDS
-Managed relational databases (MySQL, PostgreSQL, SQL Server, Oracle, MariaDB). AWS handles backups, patching, and failover options.
+Managed relational databases (MySQL, PostgreSQL, SQL Server, Oracle, MariaDB, IBM Db2). AWS handles backups, patching, and failover options.
 
 ### Comparisons
 - **RDS vs DB on EC2:**  
