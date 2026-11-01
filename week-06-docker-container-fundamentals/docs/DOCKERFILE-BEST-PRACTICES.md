@@ -54,4 +54,4 @@ GOOD:   FROM python:3.12-slim   (predictable, reproducible)
 
 ## 6. Use HEALTHCHECK
 
-Tells Docker (and ECS/Kubernetes) how to verify the container is actually working, not just running. A container can be "up" but the application inside it can be crashed.
+Tells Docker (and ECS) how to verify the container is actually working, not just running. A container can be "up" but the application inside it can be crashed. Kubernetes ignores HEALTHCHECK and uses liveness and readiness probes instead.
