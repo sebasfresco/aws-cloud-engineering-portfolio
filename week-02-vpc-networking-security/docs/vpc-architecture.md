@@ -85,7 +85,7 @@ Private instances cannot do normal operations like:
 - Security Groups (stateful, instance-level)
 - Network ACLs (stateless, subnet-level)
 
-This is the baseline VPC layout you will see across most real AWS environments.
+This is the shape of the baseline layout in most real AWS environments, built in one Availability Zone. Production repeats the public and private subnets in at least two AZs, usually with a NAT Gateway per AZ, so losing one AZ does not take down the network path.
 
 ---
 
@@ -115,6 +115,7 @@ It forces better architecture patterns instead of accidental exposure.
 | EC2 t3.micro (private) | ~$8 | internal tier placeholder |
 | IGW, route tables, NACLs | $0 | no direct cost |
 | NAT data transfer | variable | charged per GB |
+| Public IPv4 addresses x 2 | ~$7.30 | $0.005/hr each: the NAT Gateway's Elastic IP and the public instance |
 
 NAT Gateway is the main cost center here.
 It is a managed service, and AWS charges a premium for convenience.
