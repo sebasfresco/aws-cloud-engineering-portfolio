@@ -42,11 +42,11 @@ LinkedIn article + video: [Terraform deployed my entire AWS architecture in unde
 
 ### Module responsibilities
 
-**`modules/vpc`** — Owns all networking. Creates the VPC, IGW, subnets distributed across dynamically discovered AZs, and the public route table. Private subnets intentionally have no NAT Gateway (cost optimization).
+**`modules/vpc`**: Owns all networking. Creates the VPC, IGW, subnets distributed across dynamically discovered AZs, and the public route table. Private subnets intentionally have no NAT Gateway (cost optimization).
 
-**`modules/web-tier`** — Owns everything on top of the VPC: security groups, ALB, target group, listener, launch template, ASG, scaling policy, SNS topic and CPU alarm. The ALB SG accepts HTTP from the internet; the web SG only accepts HTTP from the ALB SG (source-SG reference, not CIDR), so instance public IPs cannot be hit directly.
+**`modules/web-tier`**: Owns everything on top of the VPC: security groups, ALB, target group, listener, launch template, ASG, scaling policy, SNS topic and CPU alarm. The ALB SG accepts HTTP from the internet; the web SG only accepts HTTP from the ALB SG (source-SG reference, not CIDR), so instance public IPs cannot be hit directly.
 
-**`envs/dev`, `envs/prod`** — One Terraform root per environment. Each one calls both modules with that environment's values and keeps its own state file, so a `terraform apply` in `envs/dev` cannot change prod. See decision 1 in [`docs/DECISIONS.md`](./docs/DECISIONS.md) for why I chose directories over workspaces.
+**`envs/dev`, `envs/prod`**: One Terraform root per environment. Each one calls both modules with that environment's values and keeps its own state file, so a `terraform apply` in `envs/dev` cannot change prod. See decision 1 in [`docs/DECISIONS.md`](./docs/DECISIONS.md) for why I chose directories over workspaces.
 
 ---
 
