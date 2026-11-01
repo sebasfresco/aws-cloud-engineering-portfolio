@@ -277,7 +277,7 @@ Baseline:
 - 2x `t3.micro` running 24/7
 - 1x ALB running 24/7
 
-Expect roughly ~$30–$40/month depending on usage.
+Expect roughly ~$37/month before public IPv4, and about $45-52/month once the ALB addresses (and instance addresses, if any) are counted. See [`cost-analysis.md`](./cost-analysis.md).
 
 ---
 
