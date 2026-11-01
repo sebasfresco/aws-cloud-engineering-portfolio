@@ -2,7 +2,7 @@
 *.tfstate
 *.tfstate.backup
 *.tfvars
-.terraform.lock.hcl
+!*.tfvars.example
 
 # Crash logs
 crash.log

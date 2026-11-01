@@ -5,10 +5,10 @@ output "vpc_id" {
 
 output "alb_dns_name" {
   description = "DNS name of the ALB. Visit http://<this> to test."
-  value       = aws_lb.web.dns_name
+  value       = module.web_tier.alb_dns_name
 }
 
 output "asg_name" {
   description = "Name of the Auto Scaling Group"
-  value       = aws_autoscaling_group.web.name
+  value       = module.web_tier.asg_name
 }
