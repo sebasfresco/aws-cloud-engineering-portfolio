@@ -95,6 +95,18 @@ ALB total = **$19.35 / month**
 
 ---
 
+## Missing From the Scenarios Above: Public IPv4
+AWS charges $0.005/hr (about $3.65/month) for every public IPv4 address, in use or idle.
+
+| Address | Monthly Cost |
+|---|---:|
+| ALB (at least 2, one per AZ) | $7.30 |
+| 2 instances in public subnets, if they get public IPs | $7.30 |
+
+That moves the 24/7 total from $37.45 to about $44.75 for the ALB addresses alone, or about $52 if the instances have public IPs too. Instances in private subnets would avoid the second line, but need a NAT Gateway or VPC endpoints to install packages.
+
+---
+
 ## What “High Availability” Actually Costs
 The cost increase comes from paying for redundancy:
 

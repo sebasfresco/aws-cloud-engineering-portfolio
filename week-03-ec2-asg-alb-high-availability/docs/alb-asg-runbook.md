@@ -63,7 +63,7 @@ The ALB should be the only entry point.
 
 ### 3) Launch Template
 Create a Launch Template with:
-- Amazon Linux 2 (or equivalent)
+- Amazon Linux 2023 (the user data uses `dnf`, which Amazon Linux 2 does not have)
 - instance type: `t3.micro`
 - security group: Instance-SG
 - user data that:
@@ -178,8 +178,9 @@ Action:
 
 Expected:
 - targets become Unhealthy
-- ALB returns 503
+- the ALB fails open: when every target in the group is unhealthy, it routes to all of them anyway, so users get the app's own response (here the 404)
 - ASG can churn (replace instances endlessly)
+- while churn leaves no targets registered, the ALB returns 503
 
 This is one of the cleanest ways to accidentally create downtime.
 
